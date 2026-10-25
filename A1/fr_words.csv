@@ -1,0 +1,385 @@
+french,english,article,category,topic,example
+l'homme,the man,le,noun,,L'homme est grand.
+la femme,the woman,la,noun,,La femme est là.
+l'enfant,the child,le,noun,,L'enfant joue dehors.
+le garçon,the boy,le,noun,,Le garçon court vite.
+la fille,the girl; daughter,la,noun,,La fille lit un livre.
+l'ami,the friend (m),le,noun,,Mon ami arrive demain.
+l'amie,the friend (f),la,noun,,Mon amie habite ici.
+la famille,the family,la,noun,,Ma famille est grande.
+le père,the father,le,noun,,Mon père travaille.
+la mère,the mother,la,noun,,Ma mère cuisine bien.
+le frère,the brother,le,noun,,J'ai un frère.
+la sœur,the sister,la,noun,,Ma sœur est jeune.
+les parents,the parents,le,noun,,Mes parents voyagent.
+le fils,the son,le,noun,,Leur fils est petit.
+la personne,the person,la,noun,,Une personne attend.
+le bébé,the baby,le,noun,,Le bébé dort.
+le voisin,the neighbour,le,noun,,Mon voisin est gentil.
+la maison,the house,la,noun,,La maison est blanche.
+l'appartement,the flat; apartment,le,noun,,L'appartement est petit.
+la chambre,the bedroom; room,la,noun,,La chambre est propre.
+la cuisine,the kitchen,la,noun,,La cuisine est moderne.
+la porte,the door,la,noun,,La porte est ouverte.
+la fenêtre,the window,la,noun,,La fenêtre est fermée.
+la table,the table,la,noun,,La table est en bois.
+la chaise,the chair,la,noun,,La chaise est cassée.
+le lit,the bed,le,noun,,Le lit est confortable.
+le livre,the book,le,noun,,Je lis un livre.
+le stylo,the pen,le,noun,,Le stylo est bleu.
+la clé,the key,la,noun,,Où est la clé?
+le téléphone,the phone,le,noun,,Mon téléphone sonne.
+l'ordinateur,the computer,le,noun,,L'ordinateur est lent.
+la voiture,the car,la,noun,,La voiture est rouge.
+la lampe,the lamp,la,noun,,La lampe est allumée.
+le sac,the bag,le,noun,,Le sac est lourd.
+l'argent,the money,le,noun,,Je n'ai pas d'argent.
+l'eau,the water,la,noun,,Je bois de l'eau.
+le pain,the bread,le,noun,,Le pain est frais.
+le café,the coffee,le,noun,,Je voudrais un café.
+le thé,the tea,le,noun,,Le thé est chaud.
+le lait,the milk,le,noun,,Le lait est froid.
+le fromage,the cheese,le,noun,,Le fromage est suisse.
+le vin,the wine,le,noun,,Le vin est rouge.
+la bière,the beer,la,noun,,La bière est fraîche.
+la pomme,the apple,la,noun,,La pomme est verte.
+le fruit,the fruit,le,noun,,Le fruit est mûr.
+le légume,the vegetable,le,noun,,Le légume est frais.
+la viande,the meat,la,noun,,La viande est bonne.
+le poisson,the fish,le,noun,,Le poisson est frais.
+l'œuf,the egg,le,noun,,L'œuf est dur.
+le repas,the meal,le,noun,,Le repas est prêt.
+le petit-déjeuner,the breakfast,le,noun,,Le petit-déjeuner est servi.
+le déjeuner,the lunch,le,noun,,Le déjeuner est à midi.
+le dîner,the dinner,le,noun,,Le dîner est tard.
+le restaurant,the restaurant,le,noun,,Le restaurant est plein.
+la ville,the city; town,la,noun,,La ville est belle.
+le village,the village,le,noun,,Le village est calme.
+la rue,the street,la,noun,,La rue est longue.
+le magasin,the shop,le,noun,,Le magasin est fermé.
+le marché,the market,le,noun,,Le marché est le samedi.
+la banque,the bank,la,noun,,La banque est ouverte.
+l'école,the school,la,noun,,L'école commence à huit heures.
+le bureau,the office; desk,le,noun,,Le bureau est au centre.
+le parc,the park,le,noun,,Le parc est grand.
+la plage,the beach,la,noun,,La plage est loin.
+le pays,the country,le,noun,,Le pays est magnifique.
+le jour,the day,le,noun,,Le jour est long.
+la semaine,the week,la,noun,,La semaine est finie.
+le mois,the month,le,noun,,Le mois de mai est doux.
+l'année,the year,la,noun,,L'année est courte.
+l'heure,the hour; time,la,noun,,Quelle heure est-il?
+le matin,the morning,le,noun,,"Le matin, je cours."
+le soir,the evening,le,noun,,"Le soir, je lis."
+la nuit,the night,la,noun,,La nuit est calme.
+le temps,the time; weather,le,noun,,Le temps passe vite.
+aujourd'hui,today,,word,,"Aujourd'hui, il fait beau."
+demain,tomorrow,,word,,À demain!
+hier,yesterday,,word,,"Hier, il a plu."
+maintenant,now,,word,,Je pars maintenant.
+le lundi,the Monday,le,noun,,"Le lundi, je me repose."
+le mardi,the Tuesday,le,noun,,"Le mardi, je me repose."
+le mercredi,the Wednesday,le,noun,,"Le mercredi, je me repose."
+le jeudi,the Thursday,le,noun,,"Le jeudi, je me repose."
+le vendredi,the Friday,le,noun,,"Le vendredi, je me repose."
+le samedi,the Saturday,le,noun,,"Le samedi, je me repose."
+le dimanche,the Sunday,le,noun,,"Le dimanche, je me repose."
+le week-end,the weekend,le,noun,,"Le week-end, je fais du vélo."
+janvier,January,le,noun,,Mon anniversaire est en janvier.
+février,February,le,noun,,Mon anniversaire est en février.
+mars,March,le,noun,,Mon anniversaire est en mars.
+avril,April,le,noun,,Mon anniversaire est en avril.
+mai,May,le,noun,,Mon anniversaire est en mai.
+juin,June,le,noun,,Mon anniversaire est en juin.
+juillet,July,le,noun,,Mon anniversaire est en juillet.
+août,August,le,noun,,Mon anniversaire est en août.
+septembre,September,le,noun,,Mon anniversaire est en septembre.
+octobre,October,le,noun,,Mon anniversaire est en octobre.
+novembre,November,le,noun,,Mon anniversaire est en novembre.
+décembre,December,le,noun,,Mon anniversaire est en décembre.
+le printemps,the spring,le,noun,,"Au printemps, il pleut."
+l'été,the summer,le,noun,,"En été, il fait chaud."
+l'automne,the autumn; fall,le,noun,,"En automne, il vente."
+l'hiver,the winter,le,noun,,"En hiver, il neige."
+la tête,the head,la,noun,,J'ai mal à la tête.
+la main,the hand,la,noun,,La main est froide.
+le pied,the foot,le,noun,,Le pied est blessé.
+le bras,the arm,le,noun,,Le bras est cassé.
+la jambe,the leg,la,noun,,La jambe est longue.
+le cœur,the heart,le,noun,,Le cœur bat vite.
+le vêtement,the piece of clothing,le,noun,,Le vêtement est chaud.
+la chemise,the shirt,la,noun,,La chemise est blanche.
+le pantalon,the trousers,le,noun,,Le pantalon est noir.
+la veste,the jacket,la,noun,,La veste est chaude.
+les chaussures,the shoes,la,noun,,Les chaussures sont neuves.
+le chapeau,the hat,le,noun,,Le chapeau est rouge.
+grand,big; tall,,word,,La montagne est grande.
+petit,small,,word,,Le village est petit.
+bon,good,,word,,Le repas est bon.
+mauvais,bad,,word,,Le temps est mauvais.
+beau,beautiful,,word,,Le paysage est beau.
+joli,pretty,,word,,La fleur est jolie.
+nouveau,new,,word,,Le vélo est nouveau.
+vieux,old,,word,,Le refuge est vieux.
+jeune,young,,word,,L'athlète est jeune.
+chaud,hot; warm,,word,,Le café est chaud.
+froid,cold,,word,,L'eau est froide.
+facile,easy,,word,,L'exercice est facile.
+difficile,difficult,,word,,La montée est difficile.
+cher,expensive; dear,,word,,L'hôtel est cher.
+important,important,,word,,C'est très important.
+content,happy; pleased,,word,,Je suis content.
+fatigué,tired,,word,,Je suis fatigué.
+malade,sick,,word,,Il est malade.
+rapide,fast,,word,,Le train est rapide.
+lent,slow,,word,,Le bus est lent.
+fort,strong,,word,,Le vent est fort.
+long,long,,word,,La route est longue.
+court,short,,word,,La nuit est courte.
+haut,high,,word,,Le sommet est haut.
+loin,far,,word,,La gare est loin.
+près,near,,word,,Le parc est près.
+rouge,red,,word,,La voiture est rouge.
+bleu,blue,,word,,Le ciel est bleu.
+vert,green,,word,,La forêt est verte.
+jaune,yellow,,word,,Le soleil est jaune.
+noir,black,,word,,La nuit est noire.
+blanc,white,,word,,La neige est blanche.
+gris,grey,,word,,Le ciel est gris.
+orange,orange,,word,,Le fruit est orange.
+oui,yes,,word,,"Oui, bien sûr."
+non,no,,word,,"Non, merci."
+et,and,,word,,Toi et moi.
+ou,or,,word,,Thé ou café?
+mais,but,,word,,Petit mais fort.
+avec,with,,word,,Je viens avec toi.
+sans,without,,word,,"Sans sucre, merci."
+pour,for,,word,,C'est pour toi.
+dans,in,,word,,Dans la maison.
+sur,on,,word,,Sur la table.
+sous,under,,word,,Sous le lit.
+devant,in front of,,word,,Devant la gare.
+derrière,behind,,word,,Derrière la porte.
+ici,here,,word,,Viens ici.
+là,there,,word,,Il est là.
+très,very,,word,,Très bien.
+beaucoup,a lot,,word,,Merci beaucoup.
+un peu,a little,,word,,Un peu de pain.
+aussi,also; too,,word,,Moi aussi.
+bien,well,,word,,Ça va bien.
+mal,badly,,word,,Il dort mal.
+toujours,always,,word,,Toujours à l'heure.
+souvent,often,,word,,Je cours souvent.
+jamais,never,,word,,Jamais le lundi.
+pourquoi,why,,word,,Pourquoi pas?
+comment,how,,word,,Comment ça va?
+quand,when,,word,,Quand pars-tu?
+où,where,,word,,Où est la gare?
+qui,who,,word,,Qui es-tu?
+combien,how much,,word,,Combien ça coûte?
+parce que,because,,word,,Parce que c'est tard.
+très bien,very well,,word,,Je vais très bien.
+être,to be,,verb,,Je suis prêt.
+avoir,to have,,verb,,J'ai faim.
+faire,to do; make,,verb,,Je fais du ski.
+aller,to go,,verb,,Je vais au marché.
+venir,to come,,verb,,Tu viens avec moi?
+dire,to say,,verb,,Dis la vérité.
+voir,to see,,verb,,Je vois la montagne.
+savoir,to know,,verb,,Je sais nager.
+pouvoir,to be able to; can,,verb,,Je peux t'aider.
+vouloir,to want,,verb,,Je veux un café.
+devoir,to have to; must,,verb,,Je dois partir.
+prendre,to take,,verb,,Je prends le train.
+parler,to speak,,verb,,Je parle français.
+manger,to eat,,verb,,Nous mangeons à midi.
+boire,to drink,,verb,,Je bois de l'eau.
+dormir,to sleep,,verb,,Je dors bien.
+aimer,to like; love,,verb,,J'aime le ski.
+habiter,to live,,verb,,J'habite à Genève.
+travailler,to work,,verb,,Je travaille beaucoup.
+acheter,to buy,,verb,,J'achète du pain.
+vendre,to sell,,verb,,Il vend son vélo.
+lire,to read,,verb,,Je lis le soir.
+écrire,to write,,verb,,J'écris une lettre.
+écouter,to listen,,verb,,J'écoute la radio.
+regarder,to watch; look,,verb,,Je regarde la carte.
+comprendre,to understand,,verb,,Je comprends bien.
+apprendre,to learn,,verb,,J'apprends le français.
+donner,to give,,verb,,Donne-moi la clé.
+trouver,to find,,verb,,Je trouve la route.
+chercher,to look for,,verb,,Je cherche l'hôtel.
+attendre,to wait,,verb,,J'attends le bus.
+partir,to leave,,verb,,Je pars demain.
+arriver,to arrive,,verb,,Le train arrive.
+rester,to stay,,verb,,Je reste ici.
+marcher,to walk,,verb,,Je marche vite.
+courir,to run,,verb,,Je cours le matin.
+jouer,to play,,verb,,Les enfants jouent.
+payer,to pay,,verb,,Je paie par carte.
+ouvrir,to open,,verb,,Ouvre la porte.
+fermer,to close,,verb,,Ferme la fenêtre.
+demander,to ask,,verb,,Je demande l'heure.
+répondre,to answer,,verb,,Réponds vite.
+appeler,to call,,verb,,Je t'appelle ce soir.
+commencer,to begin,,verb,,Le cours commence.
+finir,to finish,,verb,,Je finis à cinq heures.
+aider,to help,,verb,,Je peux t'aider.
+visiter,to visit,,verb,,Je visite la ville.
+voyager,to travel,,verb,,J'aime voyager.
+porter,to carry; wear,,verb,,Je porte un sac.
+monter,to go up,,verb,,Je monte au sommet.
+descendre,to go down,,verb,,Je descends la piste.
+le ski,the ski; skiing,le,noun,ski,Je fais du ski.
+le ski de randonnée,ski touring,le,noun,ski,Le ski de randonnée monte et descend.
+le ski-alpinisme,ski mountaineering,le,noun,ski,Le ski-alpinisme est un sport olympique.
+le ski de fond,cross-country skiing,le,noun,ski,Le ski de fond est très fatigant.
+la descente,the descent; downhill,la,noun,ski,La descente est raide.
+la montée,the ascent; climb,la,noun,ski,La montée dure deux heures.
+la piste,the slope; piste,la,noun,ski,La piste est verglacée.
+la neige,the snow,la,noun,ski,La neige est fraîche.
+la poudreuse,the powder snow,la,noun,ski,La poudreuse est parfaite.
+la station,the ski resort; station,la,noun,ski,La station est ouverte.
+le télésiège,the chairlift,le,noun,ski,Le télésiège est rapide.
+le téléphérique,the cable car,le,noun,ski,Le téléphérique monte au sommet.
+la remontée mécanique,the ski lift,la,noun,ski,La remontée mécanique est fermée.
+les peaux de phoque,the climbing skins,la,noun,ski,Je mets les peaux de phoque.
+le bâton,the ski pole,le,noun,ski,Un bâton est cassé.
+le casque,the helmet,le,noun,ski,Je porte un casque.
+les lunettes,the goggles; glasses,la,noun,ski,Les lunettes sont rayées.
+la fixation,the binding,la,noun,ski,La fixation est réglée.
+la chaussure de ski,the ski boot,la,noun,ski,La chaussure de ski est serrée.
+l'avalanche,the avalanche,la,noun,ski,L'avalanche est dangereuse.
+la sécurité,the safety,la,noun,ski,La sécurité est importante.
+skier,to ski,,verb,ski,Je skie tous les week-ends.
+glisser,to slide; glide,,verb,ski,La neige fait glisser.
+le vélo,the bike,le,noun,velo,Je pars à vélo.
+le VTT,the mountain bike,le,noun,velo,Le VTT descend le sentier.
+le vélo de route,the road bike,le,noun,velo,Le vélo de route est léger.
+le gravel,the gravel bike,le,noun,velo,Le gravel roule partout.
+le cyclotourisme,bike touring,le,noun,velo,Le cyclotourisme me plaît.
+le cycliste,the cyclist,le,noun,velo,Le cycliste monte le col.
+la roue,the wheel,la,noun,velo,La roue est voilée.
+le pneu,the tyre,le,noun,velo,Le pneu est crevé.
+la chaîne,the chain,la,noun,velo,La chaîne est sale.
+le guidon,the handlebar,le,noun,velo,Le guidon est large.
+la selle,the saddle,la,noun,velo,La selle est dure.
+le frein,the brake,le,noun,velo,Le frein ne marche pas.
+la vitesse,the gear; speed,la,noun,velo,Je change de vitesse.
+la pédale,the pedal,la,noun,velo,La pédale est cassée.
+la piste cyclable,the bike path,la,noun,velo,La piste cyclable est longue.
+la sacoche,the pannier bag,la,noun,velo,La sacoche est pleine.
+pédaler,to pedal,,verb,velo,Je pédale fort.
+rouler,to ride; roll,,verb,velo,Je roule vite.
+la montagne,the mountain,la,noun,montagne,La montagne est haute.
+le sommet,the summit; peak,le,noun,montagne,Nous atteignons le sommet.
+la vallée,the valley,la,noun,montagne,La vallée est verte.
+le col,the mountain pass,le,noun,montagne,Le col est fermé en hiver.
+le glacier,the glacier,le,noun,montagne,Le glacier fond.
+le rocher,the rock,le,noun,montagne,Le rocher est glissant.
+la falaise,the cliff,la,noun,montagne,La falaise est haute.
+le sentier,the trail; path,le,noun,montagne,Le sentier monte.
+la forêt,the forest,la,noun,montagne,La forêt est sombre.
+le lac,the lake,le,noun,montagne,Le lac est gelé.
+la rivière,the river,la,noun,montagne,La rivière coule.
+la cascade,the waterfall,la,noun,montagne,La cascade est belle.
+le paysage,the landscape,le,noun,montagne,Le paysage est magnifique.
+la vue,the view,la,noun,montagne,La vue est superbe.
+l'altitude,the altitude,la,noun,montagne,L'altitude est de 3000 mètres.
+la randonnée,the hike,la,noun,montagne,La randonnée dure trois heures.
+le guide,the guide; guidebook,le,noun,montagne,Le guide connaît la route.
+la carte,the map,la,noun,montagne,Je regarde la carte.
+la boussole,the compass,la,noun,montagne,La boussole indique le nord.
+grimper,to climb,,verb,montagne,Nous grimpons le rocher.
+randonner,to hike,,verb,montagne,J'aime randonner en été.
+le camping,the campsite; camping,le,noun,camping,Le camping est complet.
+la tente,the tent,la,noun,camping,La tente est petite.
+le sac de couchage,the sleeping bag,le,noun,camping,Le sac de couchage est chaud.
+le matelas,the mattress,le,noun,camping,Le matelas est gonflé.
+le réchaud,the camping stove,le,noun,camping,Le réchaud chauffe l'eau.
+la lampe de poche,the torch; flashlight,la,noun,camping,La lampe de poche est faible.
+le feu,the fire,le,noun,camping,Le feu est interdit.
+le refuge,the mountain hut; refuge,le,noun,camping,Le refuge est complet.
+la cabane,the cabin; hut,la,noun,camping,La cabane est vieille.
+le dortoir,the dormitory,le,noun,camping,Le dortoir est plein.
+la couverture,the blanket,la,noun,camping,La couverture est chaude.
+la gourde,the water bottle,la,noun,camping,La gourde est vide.
+le couteau,the knife,le,noun,camping,Le couteau est tranchant.
+le sac à dos,the backpack,le,noun,camping,Le sac à dos est lourd.
+le gardien,the warden; keeper,le,noun,camping,Le gardien du refuge est gentil.
+la réservation,the reservation,la,noun,camping,La réservation est confirmée.
+camper,to camp,,verb,camping,Nous campons près du lac.
+le voyage,the trip; journey,le,noun,voyage,Le voyage est long.
+le train,the train,le,noun,voyage,Le train part à midi.
+l'avion,the plane,le,noun,voyage,L'avion décolle.
+le bus,the bus,le,noun,voyage,Le bus est en retard.
+le billet,the ticket,le,noun,voyage,Le billet est cher.
+la valise,the suitcase,la,noun,voyage,La valise est lourde.
+le passeport,the passport,le,noun,voyage,Mon passeport est valide.
+la frontière,the border,la,noun,voyage,La frontière est proche.
+la gare,the train station,la,noun,voyage,La gare est grande.
+l'aéroport,the airport,le,noun,voyage,L'aéroport est loin.
+l'hôtel,the hotel,le,noun,voyage,L'hôtel est complet.
+l'auberge de jeunesse,the youth hostel,la,noun,voyage,L'auberge de jeunesse est pas chère.
+le départ,the departure,le,noun,voyage,Le départ est à huit heures.
+l'arrivée,the arrival,la,noun,voyage,L'arrivée est prévue à midi.
+le vol,the flight,le,noun,voyage,Le vol est annulé.
+la langue,the language,la,noun,voyage,Je parle trois langues.
+réserver,to book; reserve,,verb,voyage,Je réserve une chambre.
+la météo,the weather; forecast,la,noun,meteo,La météo annonce du soleil.
+le soleil,the sun,le,noun,meteo,Le soleil brille.
+la pluie,the rain,la,noun,meteo,La pluie tombe.
+le nuage,the cloud,le,noun,meteo,Le nuage est gris.
+le vent,the wind,le,noun,meteo,Le vent est fort.
+le brouillard,the fog,le,noun,meteo,Le brouillard est épais.
+la tempête,the storm,la,noun,meteo,La tempête arrive.
+l'orage,the thunderstorm,le,noun,meteo,L'orage éclate.
+l'éclair,the lightning,le,noun,meteo,L'éclair illumine le ciel.
+le tonnerre,the thunder,le,noun,meteo,Le tonnerre gronde.
+la température,the temperature,la,noun,meteo,La température baisse.
+le degré,the degree,le,noun,meteo,Il fait trois degrés.
+le ciel,the sky,le,noun,meteo,Le ciel est bleu.
+le flocon,the snowflake,le,noun,meteo,Un flocon tombe.
+la glace,the ice,la,noun,meteo,La glace est épaisse.
+le verglas,the black ice,le,noun,meteo,Le verglas est dangereux.
+le givre,the frost; rime,le,noun,meteo,Le givre couvre la fenêtre.
+le gel,the frost; freeze,le,noun,meteo,Le gel abîme les plantes.
+la grêle,the hail,la,noun,meteo,La grêle tombe.
+le grésil,the sleet; graupel,le,noun,meteo,Le grésil pique le visage.
+la corniche,the cornice (snow),la,noun,meteo,La corniche peut casser.
+la congère,the snowdrift,la,noun,meteo,La congère bloque la route.
+le névé,the firn; old snow,le,noun,meteo,Le névé est très dur.
+la neige fraîche,the fresh snow,la,noun,meteo,La neige fraîche est légère.
+la neige damée,the groomed snow,la,noun,meteo,La neige damée est rapide.
+la neige dure,the hard snow,la,noun,meteo,La neige dure casse les carres.
+la neige mouillée,the wet snow,la,noun,meteo,La neige mouillée est lourde.
+la neige croûtée,the crusty snow,la,noun,meteo,La neige croûtée est difficile.
+la neige de printemps,the spring snow,la,noun,meteo,La neige de printemps est molle l'après-midi.
+la plaque de glace,the ice patch,la,noun,meteo,Attention à la plaque de glace !
+la fonte,the melt; thaw,la,noun,meteo,La fonte des neiges commence.
+ensoleillé,sunny,,word,meteo,Le temps est ensoleillé.
+nuageux,cloudy,,word,meteo,Le ciel est nuageux.
+pluvieux,rainy,,word,meteo,Le temps est pluvieux.
+venteux,windy,,word,meteo,Il fait venteux.
+enneigé,snow-covered,,word,meteo,Le sommet est enneigé.
+gelé,frozen,,word,meteo,Le lac est gelé.
+humide,humid; damp,,word,meteo,L'air est humide.
+sec,dry,,word,meteo,Le temps est sec.
+frais,cool; fresh,,word,meteo,Il fait frais ce matin.
+doux,mild,,word,meteo,L'hiver est doux.
+neiger,to snow,,verb,meteo,Il neige en montagne.
+pleuvoir,to rain,,verb,meteo,Il va pleuvoir.
+geler,to freeze,,verb,meteo,Il gèle cette nuit.
+fondre,to melt,,verb,meteo,La neige fond vite.
+souffler,to blow,,verb,meteo,Le vent souffle fort.
+la France,France,la,noun,voyage,La France est grande.
+l'Angleterre,England,la,noun,voyage,L'Angleterre est une île.
+le pays de Galles,Wales,le,noun,voyage,Le pays de Galles est vert.
+l'Écosse,Scotland,la,noun,voyage,L'Écosse est au nord.
+l'Autriche,Austria,la,noun,voyage,L'Autriche a des montagnes.
+l'Italie,Italy,la,noun,voyage,L'Italie est au sud.
+le Japon,Japan,le,noun,voyage,Le Japon est loin.
+la Russie,Russia,la,noun,voyage,La Russie est immense.
+la Norvège,Norway,la,noun,voyage,La Norvège a des fjords.
+la Nouvelle-Zélande,New Zealand,la,noun,voyage,La Nouvelle-Zélande est loin.
+la Suisse,Switzerland,la,noun,voyage,La Suisse a de belles montagnes.

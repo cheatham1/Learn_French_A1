@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="le la">
+  <meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#11151c" media="(prefers-color-scheme: dark)">
+  <style>
+    html,body{height:100%}
+    :root{padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);color-scheme:light}
+    body{margin:0}
+    img{max-width:100%}
+    [hidden]{display:none!important}
+  </style>
+<title>le la</title>
+
+<style>
+/* Layout: one-screen phone app. The two genders are the palette (le=blue, la=red, the tricolore); the rest stays quiet. */
+:root{
+  --bg:#eef1f5; --surface:#ffffff; --surface-2:#f6f8fb;
+  --fg:#18202e; --muted:#5d6b80; --line:#dde3ec; --faint:#eceff4;
+  --accent:#2d3a57;
+  --le:#12488f; --le-bg:#e4edf8;         /* masculine — flag blue */
+  --la:#cc2531; --la-bg:#fbe3e5;         /* feminine  — flag red  */
+  --good:#1f8a63; --bad:#cc2531;
+  --r:16px; --font-display:"Fraunces",Georgia,"Times New Roman",serif;
+  --font-ui:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11151c; --surface:#1a212b; --surface-2:#161d26;
+  --fg:#e9edf3; --muted:#9aa7b8; --line:#28313f; --faint:#1e2631;
+  --accent:#c3cde6;
+  --le:#6ea6f0; --le-bg:#16233b;
+  --la:#ff6e78; --la-bg:#39212a;
+  --good:#5ed29f; --bad:#ff6e78;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#11151c; --surface:#1a212b; --surface-2:#161d26;
+  --fg:#e9edf3; --muted:#9aa7b8; --line:#28313f; --faint:#1e2631;
+  --accent:#c3cde6;
+  --le:#6ea6f0; --le-bg:#16233b;
+  --la:#ff6e78; --la-bg:#39212a;
+  --good:#5ed29f; --bad:#ff6e78;
+  color-scheme:dark;
+}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-ui);
+  -webkit-font-smoothing:antialiased;overflow:hidden}
+*{box-sizing:border-box}
+button{font-family:inherit;cursor:pointer;color:inherit}
+.tnum{font-variant-numeric:tabular-nums}
+
+#app{display:flex;flex-direction:column;height:100%;max-width:560px;margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));}
+
+header{display:flex;align-items:center;justify-content:space-between;padding-block:14px 10px;flex:0 0 auto}
+.brand{font-family:var(--font-display);font-weight:600;font-size:1.15rem;letter-spacing:-.01em;display:flex;gap:.3em}
+.brand .b1{color:var(--le)} .brand .b2{color:var(--la)}
+.stat{font-size:.72rem;color:var(--muted);text-align:right;line-height:1.3}
+.stat b{color:var(--fg);font-weight:600}
+.linklike{background:none;border:0;color:var(--muted);font-size:.72rem;text-decoration:underline;padding:2px 0}
+
+#home{flex:1 1 auto;overflow-y:auto;display:flex;flex-direction:column;gap:18px;padding-bottom:20px}
+.lede{font-family:var(--font-display);font-size:1.5rem;line-height:1.2;font-weight:500;text-wrap:balance;margin:4px 0 0}
+.lede small{display:block;font-family:var(--font-ui);font-size:.82rem;font-weight:400;color:var(--muted);margin-top:6px;letter-spacing:.01em}
+
+.seg{display:flex;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:4px;gap:4px}
+.seg button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px 8px;font-size:.86rem;font-weight:600;color:var(--muted);white-space:normal;line-height:1.2}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--fg);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.seg .arrow{font-weight:400;opacity:.6}
+
+.section-label{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.decks{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.deck{display:flex;flex-direction:column;gap:3px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 13px;transition:transform .08s ease,border-color .15s}
+.deck:active{transform:scale(.98)}
+.deck .nm{font-weight:600;font-size:.95rem}
+.deck .ct{font-size:.74rem;color:var(--muted)}
+.deck.wide{grid-column:1 / -1;flex-direction:row;align-items:center;justify-content:space-between}
+.deck.drill{border-color:transparent;background:linear-gradient(135deg,var(--le-bg),var(--la-bg))}
+.deck.drill .nm{color:var(--fg)}
+.grouphead{grid-column:1/-1;font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-top:8px;padding-top:12px;border-top:1px solid var(--line)}
+
+#study{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.topbar{display:flex;align-items:center;gap:12px;padding-block:6px 10px;flex:0 0 auto}
+.back{border:1px solid var(--line);background:var(--surface);border-radius:10px;width:38px;height:38px;font-size:1.1rem;flex:0 0 auto;display:grid;place-items:center}
+.topmeta{flex:1 1 auto;min-width:0}
+.topmeta .nm{font-weight:600;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topmeta .sub{font-size:.72rem;color:var(--muted)}
+.score{font-size:.78rem;color:var(--muted);text-align:right;flex:0 0 auto}
+.score b{color:var(--good);font-weight:700}
+
+.bar{height:5px;background:var(--faint);border-radius:99px;overflow:hidden;flex:0 0 auto}
+.bar>i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .25s ease}
+
+.stage{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;min-height:0;padding:10px 0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;min-height:0;flex:1 1 auto;text-align:center;box-shadow:0 2px 10px rgba(20,30,50,.05)}
+.kicker{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.term{font-family:var(--font-display);font-weight:500;line-height:1.12;font-size:clamp(1.8rem,7.5vw,2.9rem);text-wrap:balance;letter-spacing:-.01em}
+.term .art{font-style:italic}
+.term .art.le{color:var(--le)} .term .art.la{color:var(--la)}
+.answer{font-size:clamp(1.15rem,5vw,1.5rem);font-weight:600}
+.example{font-size:.9rem;color:var(--muted);line-height:1.45;max-width:34ch;border-top:1px solid var(--line);padding-top:12px;font-family:var(--font-display);font-style:italic}
+.verdict{font-size:.82rem;font-weight:700;letter-spacing:.02em}
+.verdict.ok{color:var(--good)} .verdict.no{color:var(--bad)}
+.numword{font-size:clamp(1.3rem,6.4vw,2.1rem);overflow-wrap:anywhere;max-width:100%;line-height:1.15}
+
+.controls{flex:0 0 auto;display:flex;flex-direction:column;gap:10px;padding-block:12px calc(14px + env(safe-area-inset-bottom,0px))}
+.btn{border:0;border-radius:14px;padding:16px;font-size:1rem;font-weight:700;width:100%;transition:transform .07s ease,filter .15s}
+.btn:active{transform:scale(.98)}
+.btn.primary{background:var(--accent);color:var(--surface)}
+:root[data-theme="dark"] .btn.primary,:root:not([data-theme="light"]) .btn.primary{color:#11151c}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .btn.primary{color:#fff}}
+.btn.ghost{background:var(--surface);border:1px solid var(--line);color:var(--fg);font-weight:600}
+.row{display:flex;gap:10px}.row>*{flex:1}
+
+.arts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.art-btn{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:18px 6px 14px;font-weight:700;font-size:1.2rem;line-height:1;display:flex;flex-direction:column;gap:4px;align-items:center;transition:transform .07s ease,border-color .12s,background .12s}
+.art-btn small{font-size:.6rem;font-weight:600;letter-spacing:.06em;color:var(--muted);text-transform:uppercase}
+.art-btn:active{transform:scale(.97)}
+.art-btn[data-k="le"]{color:var(--le)} .art-btn[data-k="le"].fill{background:var(--le-bg);border-color:var(--le)}
+.art-btn[data-k="la"]{color:var(--la)} .art-btn[data-k="la"].fill{background:var(--la-bg);border-color:var(--la)}
+.art-btn.wrong{border-color:var(--bad);background:transparent;opacity:.55}
+.art-btn:disabled{cursor:default}
+
+.toggle{display:inline-flex;align-items:center;gap:10px;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:.84rem;font-weight:600;color:var(--fg);align-self:flex-start}
+.toggle .sw{width:34px;height:20px;border-radius:99px;background:var(--line);position:relative;transition:background .15s;flex:0 0 auto}
+.toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
+.toggle[aria-pressed="true"] .sw{background:var(--le)}
+.toggle[aria-pressed="true"] .sw::after{transform:translateX(14px)}
+.voicesel{align-self:flex-start;max-width:100%;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.82rem;font-weight:600;color:var(--fg);margin-top:-8px}
+.spk{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);display:inline-grid;place-items:center;transition:transform .07s ease,background .12s}
+.spk:active{transform:scale(.9)} .spk.speaking{color:var(--le);border-color:var(--le)}
+.cfg{width:100%;display:flex;flex-direction:column;gap:9px}
+.hint{font-size:.78rem;color:var(--muted);text-align:center;max-width:32ch;margin:0 auto}
+
+.done{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px}
+.done .big{font-family:var(--font-display);font-size:2.6rem;font-weight:500;line-height:1}
+.done .pct{font-size:3.4rem;font-weight:800;color:var(--accent);line-height:1;font-family:var(--font-ui)}
+.done p{color:var(--muted);font-size:.9rem;margin:0}
+
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:focus-visible{outline:2.5px solid var(--le);outline-offset:2px;border-radius:6px}
+</style>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="brand"><span class="b1">le</span><span class="b2">la</span></div>
+    <div class="stat" id="homeStat"></div>
+  </header>
+
+  <main id="home">
+    <h1 class="lede">French A1 flashcards
+      <small>~330 words · le / la gender practice · tap to study</small>
+    </h1>
+    <div>
+      <div class="section-label" style="margin-bottom:8px">Direction</div>
+      <div class="seg" id="dirSeg" role="group" aria-label="Study direction">
+        <button data-dir="fr" aria-pressed="true">French <span class="arrow">→</span> English</button>
+        <button data-dir="en" aria-pressed="false">English <span class="arrow">→</span> French</button>
+      </div>
+    </div>
+    <button class="toggle" id="audioToggle" aria-pressed="true"><span class="sw"></span> Speak French aloud</button>
+    <select id="voiceSel" class="voicesel hidden" aria-label="French voice"></select>
+    <div>
+      <div class="section-label" style="margin-bottom:8px">Decks</div>
+      <div class="decks" id="deckGrid"></div>
+    </div>
+    <button class="linklike" id="resetBtn" style="align-self:flex-start">Reset my progress</button>
+  </main>
+
+  <section id="study" class="hidden">
+    <div class="topbar">
+      <button class="back" id="backBtn" aria-label="Back to decks">←</button>
+      <div class="topmeta"><div class="nm" id="deckName"></div><div class="sub" id="deckSub"></div></div>
+      <div class="score" id="scoreBox"></div>
+    </div>
+    <div class="bar"><i id="barFill"></i></div>
+    <div class="stage" id="stage"></div>
+    <div class="controls" id="controls"></div>
+  </section>
+</div>
+
+<script>
+const WORDS = [{"g":"l'homme","e":"the man","a":"le","c":"noun","t":"","x":"L'homme est grand."},{"g":"la femme","e":"the woman","a":"la","c":"noun","t":"","x":"La femme est là."},{"g":"l'enfant","e":"the child","a":"le","c":"noun","t":"","x":"L'enfant joue dehors."},{"g":"le garçon","e":"the boy","a":"le","c":"noun","t":"","x":"Le garçon court vite."},{"g":"la fille","e":"the girl; daughter","a":"la","c":"noun","t":"","x":"La fille lit un livre."},{"g":"l'ami","e":"the friend (m)","a":"le","c":"noun","t":"","x":"Mon ami arrive demain."},{"g":"l'amie","e":"the friend (f)","a":"la","c":"noun","t":"","x":"Mon amie habite ici."},{"g":"la famille","e":"the family","a":"la","c":"noun","t":"","x":"Ma famille est grande."},{"g":"le père","e":"the father","a":"le","c":"noun","t":"","x":"Mon père travaille."},{"g":"la mère","e":"the mother","a":"la","c":"noun","t":"","x":"Ma mère cuisine bien."},{"g":"le frère","e":"the brother","a":"le","c":"noun","t":"","x":"J'ai un frère."},{"g":"la sœur","e":"the sister","a":"la","c":"noun","t":"","x":"Ma sœur est jeune."},{"g":"les parents","e":"the parents","a":"le","c":"noun","t":"","x":"Mes parents voyagent."},{"g":"le fils","e":"the son","a":"le","c":"noun","t":"","x":"Leur fils est petit."},{"g":"la personne","e":"the person","a":"la","c":"noun","t":"","x":"Une personne attend."},{"g":"le bébé","e":"the baby","a":"le","c":"noun","t":"","x":"Le bébé dort."},{"g":"le voisin","e":"the neighbour","a":"le","c":"noun","t":"","x":"Mon voisin est gentil."},{"g":"la maison","e":"the house","a":"la","c":"noun","t":"","x":"La maison est blanche."},{"g":"l'appartement","e":"the flat; apartment","a":"le","c":"noun","t":"","x":"L'appartement est petit."},{"g":"la chambre","e":"the bedroom; room","a":"la","c":"noun","t":"","x":"La chambre est propre."},{"g":"la cuisine","e":"the kitchen","a":"la","c":"noun","t":"","x":"La cuisine est moderne."},{"g":"la porte","e":"the door","a":"la","c":"noun","t":"","x":"La porte est ouverte."},{"g":"la fenêtre","e":"the window","a":"la","c":"noun","t":"","x":"La fenêtre est fermée."},{"g":"la table","e":"the table","a":"la","c":"noun","t":"","x":"La table est en bois."},{"g":"la chaise","e":"the chair","a":"la","c":"noun","t":"","x":"La chaise est cassée."},{"g":"le lit","e":"the bed","a":"le","c":"noun","t":"","x":"Le lit est confortable."},{"g":"le livre","e":"the book","a":"le","c":"noun","t":"","x":"Je lis un livre."},{"g":"le stylo","e":"the pen","a":"le","c":"noun","t":"","x":"Le stylo est bleu."},{"g":"la clé","e":"the key","a":"la","c":"noun","t":"","x":"Où est la clé?"},{"g":"le téléphone","e":"the phone","a":"le","c":"noun","t":"","x":"Mon téléphone sonne."},{"g":"l'ordinateur","e":"the computer","a":"le","c":"noun","t":"","x":"L'ordinateur est lent."},{"g":"la voiture","e":"the car","a":"la","c":"noun","t":"","x":"La voiture est rouge."},{"g":"la lampe","e":"the lamp","a":"la","c":"noun","t":"","x":"La lampe est allumée."},{"g":"le sac","e":"the bag","a":"le","c":"noun","t":"","x":"Le sac est lourd."},{"g":"l'argent","e":"the money","a":"le","c":"noun","t":"","x":"Je n'ai pas d'argent."},{"g":"l'eau","e":"the water","a":"la","c":"noun","t":"","x":"Je bois de l'eau."},{"g":"le pain","e":"the bread","a":"le","c":"noun","t":"","x":"Le pain est frais."},{"g":"le café","e":"the coffee","a":"le","c":"noun","t":"","x":"Je voudrais un café."},{"g":"le thé","e":"the tea","a":"le","c":"noun","t":"","x":"Le thé est chaud."},{"g":"le lait","e":"the milk","a":"le","c":"noun","t":"","x":"Le lait est froid."},{"g":"le fromage","e":"the cheese","a":"le","c":"noun","t":"","x":"Le fromage est suisse."},{"g":"le vin","e":"the wine","a":"le","c":"noun","t":"","x":"Le vin est rouge."},{"g":"la bière","e":"the beer","a":"la","c":"noun","t":"","x":"La bière est fraîche."},{"g":"la pomme","e":"the apple","a":"la","c":"noun","t":"","x":"La pomme est verte."},{"g":"le fruit","e":"the fruit","a":"le","c":"noun","t":"","x":"Le fruit est mûr."},{"g":"le légume","e":"the vegetable","a":"le","c":"noun","t":"","x":"Le légume est frais."},{"g":"la viande","e":"the meat","a":"la","c":"noun","t":"","x":"La viande est bonne."},{"g":"le poisson","e":"the fish","a":"le","c":"noun","t":"","x":"Le poisson est frais."},{"g":"l'œuf","e":"the egg","a":"le","c":"noun","t":"","x":"L'œuf est dur."},{"g":"le repas","e":"the meal","a":"le","c":"noun","t":"","x":"Le repas est prêt."},{"g":"le petit-déjeuner","e":"the breakfast","a":"le","c":"noun","t":"","x":"Le petit-déjeuner est servi."},{"g":"le déjeuner","e":"the lunch","a":"le","c":"noun","t":"","x":"Le déjeuner est à midi."},{"g":"le dîner","e":"the dinner","a":"le","c":"noun","t":"","x":"Le dîner est tard."},{"g":"le restaurant","e":"the restaurant","a":"le","c":"noun","t":"","x":"Le restaurant est plein."},{"g":"la ville","e":"the city; town","a":"la","c":"noun","t":"","x":"La ville est belle."},{"g":"le village","e":"the village","a":"le","c":"noun","t":"","x":"Le village est calme."},{"g":"la rue","e":"the street","a":"la","c":"noun","t":"","x":"La rue est longue."},{"g":"le magasin","e":"the shop","a":"le","c":"noun","t":"","x":"Le magasin est fermé."},{"g":"le marché","e":"the market","a":"le","c":"noun","t":"","x":"Le marché est le samedi."},{"g":"la banque","e":"the bank","a":"la","c":"noun","t":"","x":"La banque est ouverte."},{"g":"l'école","e":"the school","a":"la","c":"noun","t":"","x":"L'école commence à huit heures."},{"g":"le bureau","e":"the office; desk","a":"le","c":"noun","t":"","x":"Le bureau est au centre."},{"g":"le parc","e":"the park","a":"le","c":"noun","t":"","x":"Le parc est grand."},{"g":"la plage","e":"the beach","a":"la","c":"noun","t":"","x":"La plage est loin."},{"g":"le pays","e":"the country","a":"le","c":"noun","t":"","x":"Le pays est magnifique."},{"g":"le jour","e":"the day","a":"le","c":"noun","t":"","x":"Le jour est long."},{"g":"la semaine","e":"the week","a":"la","c":"noun","t":"","x":"La semaine est finie."},{"g":"le mois","e":"the month","a":"le","c":"noun","t":"","x":"Le mois de mai est doux."},{"g":"l'année","e":"the year","a":"la","c":"noun","t":"","x":"L'année est courte."},{"g":"l'heure","e":"the hour; time","a":"la","c":"noun","t":"","x":"Quelle heure est-il?"},{"g":"le matin","e":"the morning","a":"le","c":"noun","t":"","x":"Le matin, je cours."},{"g":"le soir","e":"the evening","a":"le","c":"noun","t":"","x":"Le soir, je lis."},{"g":"la nuit","e":"the night","a":"la","c":"noun","t":"","x":"La nuit est calme."},{"g":"le temps","e":"the time; weather","a":"le","c":"noun","t":"","x":"Le temps passe vite."},{"g":"aujourd'hui","e":"today","a":"","c":"word","t":"","x":"Aujourd'hui, il fait beau."},{"g":"demain","e":"tomorrow","a":"","c":"word","t":"","x":"À demain!"},{"g":"hier","e":"yesterday","a":"","c":"word","t":"","x":"Hier, il a plu."},{"g":"maintenant","e":"now","a":"","c":"word","t":"","x":"Je pars maintenant."},{"g":"le lundi","e":"the Monday","a":"le","c":"noun","t":"","x":"Le lundi, je me repose."},{"g":"le mardi","e":"the Tuesday","a":"le","c":"noun","t":"","x":"Le mardi, je me repose."},{"g":"le mercredi","e":"the Wednesday","a":"le","c":"noun","t":"","x":"Le mercredi, je me repose."},{"g":"le jeudi","e":"the Thursday","a":"le","c":"noun","t":"","x":"Le jeudi, je me repose."},{"g":"le vendredi","e":"the Friday","a":"le","c":"noun","t":"","x":"Le vendredi, je me repose."},{"g":"le samedi","e":"the Saturday","a":"le","c":"noun","t":"","x":"Le samedi, je me repose."},{"g":"le dimanche","e":"the Sunday","a":"le","c":"noun","t":"","x":"Le dimanche, je me repose."},{"g":"le week-end","e":"the weekend","a":"le","c":"noun","t":"","x":"Le week-end, je fais du vélo."},{"g":"janvier","e":"January","a":"le","c":"noun","t":"","x":"Mon anniversaire est en janvier."},{"g":"février","e":"February","a":"le","c":"noun","t":"","x":"Mon anniversaire est en février."},{"g":"mars","e":"March","a":"le","c":"noun","t":"","x":"Mon anniversaire est en mars."},{"g":"avril","e":"April","a":"le","c":"noun","t":"","x":"Mon anniversaire est en avril."},{"g":"mai","e":"May","a":"le","c":"noun","t":"","x":"Mon anniversaire est en mai."},{"g":"juin","e":"June","a":"le","c":"noun","t":"","x":"Mon anniversaire est en juin."},{"g":"juillet","e":"July","a":"le","c":"noun","t":"","x":"Mon anniversaire est en juillet."},{"g":"août","e":"August","a":"le","c":"noun","t":"","x":"Mon anniversaire est en août."},{"g":"septembre","e":"September","a":"le","c":"noun","t":"","x":"Mon anniversaire est en septembre."},{"g":"octobre","e":"October","a":"le","c":"noun","t":"","x":"Mon anniversaire est en octobre."},{"g":"novembre","e":"November","a":"le","c":"noun","t":"","x":"Mon anniversaire est en novembre."},{"g":"décembre","e":"December","a":"le","c":"noun","t":"","x":"Mon anniversaire est en décembre."},{"g":"le printemps","e":"the spring","a":"le","c":"noun","t":"","x":"Au printemps, il pleut."},{"g":"l'été","e":"the summer","a":"le","c":"noun","t":"","x":"En été, il fait chaud."},{"g":"l'automne","e":"the autumn; fall","a":"le","c":"noun","t":"","x":"En automne, il vente."},{"g":"l'hiver","e":"the winter","a":"le","c":"noun","t":"","x":"En hiver, il neige."},{"g":"la tête","e":"the head","a":"la","c":"noun","t":"","x":"J'ai mal à la tête."},{"g":"la main","e":"the hand","a":"la","c":"noun","t":"","x":"La main est froide."},{"g":"le pied","e":"the foot","a":"le","c":"noun","t":"","x":"Le pied est blessé."},{"g":"le bras","e":"the arm","a":"le","c":"noun","t":"","x":"Le bras est cassé."},{"g":"la jambe","e":"the leg","a":"la","c":"noun","t":"","x":"La jambe est longue."},{"g":"le cœur","e":"the heart","a":"le","c":"noun","t":"","x":"Le cœur bat vite."},{"g":"le vêtement","e":"the piece of clothing","a":"le","c":"noun","t":"","x":"Le vêtement est chaud."},{"g":"la chemise","e":"the shirt","a":"la","c":"noun","t":"","x":"La chemise est blanche."},{"g":"le pantalon","e":"the trousers","a":"le","c":"noun","t":"","x":"Le pantalon est noir."},{"g":"la veste","e":"the jacket","a":"la","c":"noun","t":"","x":"La veste est chaude."},{"g":"les chaussures","e":"the shoes","a":"la","c":"noun","t":"","x":"Les chaussures sont neuves."},{"g":"le chapeau","e":"the hat","a":"le","c":"noun","t":"","x":"Le chapeau est rouge."},{"g":"grand","e":"big; tall","a":"","c":"word","t":"","x":"La montagne est grande."},{"g":"petit","e":"small","a":"","c":"word","t":"","x":"Le village est petit."},{"g":"bon","e":"good","a":"","c":"word","t":"","x":"Le repas est bon."},{"g":"mauvais","e":"bad","a":"","c":"word","t":"","x":"Le temps est mauvais."},{"g":"beau","e":"beautiful","a":"","c":"word","t":"","x":"Le paysage est beau."},{"g":"joli","e":"pretty","a":"","c":"word","t":"","x":"La fleur est jolie."},{"g":"nouveau","e":"new","a":"","c":"word","t":"","x":"Le vélo est nouveau."},{"g":"vieux","e":"old","a":"","c":"word","t":"","x":"Le refuge est vieux."},{"g":"jeune","e":"young","a":"","c":"word","t":"","x":"L'athlète est jeune."},{"g":"chaud","e":"hot; warm","a":"","c":"word","t":"","x":"Le café est chaud."},{"g":"froid","e":"cold","a":"","c":"word","t":"","x":"L'eau est froide."},{"g":"facile","e":"easy","a":"","c":"word","t":"","x":"L'exercice est facile."},{"g":"difficile","e":"difficult","a":"","c":"word","t":"","x":"La montée est difficile."},{"g":"cher","e":"expensive; dear","a":"","c":"word","t":"","x":"L'hôtel est cher."},{"g":"important","e":"important","a":"","c":"word","t":"","x":"C'est très important."},{"g":"content","e":"happy; pleased","a":"","c":"word","t":"","x":"Je suis content."},{"g":"fatigué","e":"tired","a":"","c":"word","t":"","x":"Je suis fatigué."},{"g":"malade","e":"sick","a":"","c":"word","t":"","x":"Il est malade."},{"g":"rapide","e":"fast","a":"","c":"word","t":"","x":"Le train est rapide."},{"g":"lent","e":"slow","a":"","c":"word","t":"","x":"Le bus est lent."},{"g":"fort","e":"strong","a":"","c":"word","t":"","x":"Le vent est fort."},{"g":"long","e":"long","a":"","c":"word","t":"","x":"La route est longue."},{"g":"court","e":"short","a":"","c":"word","t":"","x":"La nuit est courte."},{"g":"haut","e":"high","a":"","c":"word","t":"","x":"Le sommet est haut."},{"g":"loin","e":"far","a":"","c":"word","t":"","x":"La gare est loin."},{"g":"près","e":"near","a":"","c":"word","t":"","x":"Le parc est près."},{"g":"rouge","e":"red","a":"","c":"word","t":"","x":"La voiture est rouge."},{"g":"bleu","e":"blue","a":"","c":"word","t":"","x":"Le ciel est bleu."},{"g":"vert","e":"green","a":"","c":"word","t":"","x":"La forêt est verte."},{"g":"jaune","e":"yellow","a":"","c":"word","t":"","x":"Le soleil est jaune."},{"g":"noir","e":"black","a":"","c":"word","t":"","x":"La nuit est noire."},{"g":"blanc","e":"white","a":"","c":"word","t":"","x":"La neige est blanche."},{"g":"gris","e":"grey","a":"","c":"word","t":"","x":"Le ciel est gris."},{"g":"orange","e":"orange","a":"","c":"word","t":"","x":"Le fruit est orange."},{"g":"oui","e":"yes","a":"","c":"word","t":"","x":"Oui, bien sûr."},{"g":"non","e":"no","a":"","c":"word","t":"","x":"Non, merci."},{"g":"et","e":"and","a":"","c":"word","t":"","x":"Toi et moi."},{"g":"ou","e":"or","a":"","c":"word","t":"","x":"Thé ou café?"},{"g":"mais","e":"but","a":"","c":"word","t":"","x":"Petit mais fort."},{"g":"avec","e":"with","a":"","c":"word","t":"","x":"Je viens avec toi."},{"g":"sans","e":"without","a":"","c":"word","t":"","x":"Sans sucre, merci."},{"g":"pour","e":"for","a":"","c":"word","t":"","x":"C'est pour toi."},{"g":"dans","e":"in","a":"","c":"word","t":"","x":"Dans la maison."},{"g":"sur","e":"on","a":"","c":"word","t":"","x":"Sur la table."},{"g":"sous","e":"under","a":"","c":"word","t":"","x":"Sous le lit."},{"g":"devant","e":"in front of","a":"","c":"word","t":"","x":"Devant la gare."},{"g":"derrière","e":"behind","a":"","c":"word","t":"","x":"Derrière la porte."},{"g":"ici","e":"here","a":"","c":"word","t":"","x":"Viens ici."},{"g":"là","e":"there","a":"","c":"word","t":"","x":"Il est là."},{"g":"très","e":"very","a":"","c":"word","t":"","x":"Très bien."},{"g":"beaucoup","e":"a lot","a":"","c":"word","t":"","x":"Merci beaucoup."},{"g":"un peu","e":"a little","a":"","c":"word","t":"","x":"Un peu de pain."},{"g":"aussi","e":"also; too","a":"","c":"word","t":"","x":"Moi aussi."},{"g":"bien","e":"well","a":"","c":"word","t":"","x":"Ça va bien."},{"g":"mal","e":"badly","a":"","c":"word","t":"","x":"Il dort mal."},{"g":"toujours","e":"always","a":"","c":"word","t":"","x":"Toujours à l'heure."},{"g":"souvent","e":"often","a":"","c":"word","t":"","x":"Je cours souvent."},{"g":"jamais","e":"never","a":"","c":"word","t":"","x":"Jamais le lundi."},{"g":"pourquoi","e":"why","a":"","c":"word","t":"","x":"Pourquoi pas?"},{"g":"comment","e":"how","a":"","c":"word","t":"","x":"Comment ça va?"},{"g":"quand","e":"when","a":"","c":"word","t":"","x":"Quand pars-tu?"},{"g":"où","e":"where","a":"","c":"word","t":"","x":"Où est la gare?"},{"g":"qui","e":"who","a":"","c":"word","t":"","x":"Qui es-tu?"},{"g":"combien","e":"how much","a":"","c":"word","t":"","x":"Combien ça coûte?"},{"g":"parce que","e":"because","a":"","c":"word","t":"","x":"Parce que c'est tard."},{"g":"très bien","e":"very well","a":"","c":"word","t":"","x":"Je vais très bien."},{"g":"être","e":"to be","a":"","c":"verb","t":"","x":"Je suis prêt."},{"g":"avoir","e":"to have","a":"","c":"verb","t":"","x":"J'ai faim."},{"g":"faire","e":"to do; make","a":"","c":"verb","t":"","x":"Je fais du ski."},{"g":"aller","e":"to go","a":"","c":"verb","t":"","x":"Je vais au marché."},{"g":"venir","e":"to come","a":"","c":"verb","t":"","x":"Tu viens avec moi?"},{"g":"dire","e":"to say","a":"","c":"verb","t":"","x":"Dis la vérité."},{"g":"voir","e":"to see","a":"","c":"verb","t":"","x":"Je vois la montagne."},{"g":"savoir","e":"to know","a":"","c":"verb","t":"","x":"Je sais nager."},{"g":"pouvoir","e":"to be able to; can","a":"","c":"verb","t":"","x":"Je peux t'aider."},{"g":"vouloir","e":"to want","a":"","c":"verb","t":"","x":"Je veux un café."},{"g":"devoir","e":"to have to; must","a":"","c":"verb","t":"","x":"Je dois partir."},{"g":"prendre","e":"to take","a":"","c":"verb","t":"","x":"Je prends le train."},{"g":"parler","e":"to speak","a":"","c":"verb","t":"","x":"Je parle français."},{"g":"manger","e":"to eat","a":"","c":"verb","t":"","x":"Nous mangeons à midi."},{"g":"boire","e":"to drink","a":"","c":"verb","t":"","x":"Je bois de l'eau."},{"g":"dormir","e":"to sleep","a":"","c":"verb","t":"","x":"Je dors bien."},{"g":"aimer","e":"to like; love","a":"","c":"verb","t":"","x":"J'aime le ski."},{"g":"habiter","e":"to live","a":"","c":"verb","t":"","x":"J'habite à Genève."},{"g":"travailler","e":"to work","a":"","c":"verb","t":"","x":"Je travaille beaucoup."},{"g":"acheter","e":"to buy","a":"","c":"verb","t":"","x":"J'achète du pain."},{"g":"vendre","e":"to sell","a":"","c":"verb","t":"","x":"Il vend son vélo."},{"g":"lire","e":"to read","a":"","c":"verb","t":"","x":"Je lis le soir."},{"g":"écrire","e":"to write","a":"","c":"verb","t":"","x":"J'écris une lettre."},{"g":"écouter","e":"to listen","a":"","c":"verb","t":"","x":"J'écoute la radio."},{"g":"regarder","e":"to watch; look","a":"","c":"verb","t":"","x":"Je regarde la carte."},{"g":"comprendre","e":"to understand","a":"","c":"verb","t":"","x":"Je comprends bien."},{"g":"apprendre","e":"to learn","a":"","c":"verb","t":"","x":"J'apprends le français."},{"g":"donner","e":"to give","a":"","c":"verb","t":"","x":"Donne-moi la clé."},{"g":"trouver","e":"to find","a":"","c":"verb","t":"","x":"Je trouve la route."},{"g":"chercher","e":"to look for","a":"","c":"verb","t":"","x":"Je cherche l'hôtel."},{"g":"attendre","e":"to wait","a":"","c":"verb","t":"","x":"J'attends le bus."},{"g":"partir","e":"to leave","a":"","c":"verb","t":"","x":"Je pars demain."},{"g":"arriver","e":"to arrive","a":"","c":"verb","t":"","x":"Le train arrive."},{"g":"rester","e":"to stay","a":"","c":"verb","t":"","x":"Je reste ici."},{"g":"marcher","e":"to walk","a":"","c":"verb","t":"","x":"Je marche vite."},{"g":"courir","e":"to run","a":"","c":"verb","t":"","x":"Je cours le matin."},{"g":"jouer","e":"to play","a":"","c":"verb","t":"","x":"Les enfants jouent."},{"g":"payer","e":"to pay","a":"","c":"verb","t":"","x":"Je paie par carte."},{"g":"ouvrir","e":"to open","a":"","c":"verb","t":"","x":"Ouvre la porte."},{"g":"fermer","e":"to close","a":"","c":"verb","t":"","x":"Ferme la fenêtre."},{"g":"demander","e":"to ask","a":"","c":"verb","t":"","x":"Je demande l'heure."},{"g":"répondre","e":"to answer","a":"","c":"verb","t":"","x":"Réponds vite."},{"g":"appeler","e":"to call","a":"","c":"verb","t":"","x":"Je t'appelle ce soir."},{"g":"commencer","e":"to begin","a":"","c":"verb","t":"","x":"Le cours commence."},{"g":"finir","e":"to finish","a":"","c":"verb","t":"","x":"Je finis à cinq heures."},{"g":"aider","e":"to help","a":"","c":"verb","t":"","x":"Je peux t'aider."},{"g":"visiter","e":"to visit","a":"","c":"verb","t":"","x":"Je visite la ville."},{"g":"voyager","e":"to travel","a":"","c":"verb","t":"","x":"J'aime voyager."},{"g":"porter","e":"to carry; wear","a":"","c":"verb","t":"","x":"Je porte un sac."},{"g":"monter","e":"to go up","a":"","c":"verb","t":"","x":"Je monte au sommet."},{"g":"descendre","e":"to go down","a":"","c":"verb","t":"","x":"Je descends la piste."},{"g":"le ski","e":"the ski; skiing","a":"le","c":"noun","t":"ski","x":"Je fais du ski."},{"g":"le ski de randonnée","e":"ski touring","a":"le","c":"noun","t":"ski","x":"Le ski de randonnée monte et descend."},{"g":"le ski-alpinisme","e":"ski mountaineering","a":"le","c":"noun","t":"ski","x":"Le ski-alpinisme est un sport olympique."},{"g":"le ski de fond","e":"cross-country skiing","a":"le","c":"noun","t":"ski","x":"Le ski de fond est très fatigant."},{"g":"la descente","e":"the descent; downhill","a":"la","c":"noun","t":"ski","x":"La descente est raide."},{"g":"la montée","e":"the ascent; climb","a":"la","c":"noun","t":"ski","x":"La montée dure deux heures."},{"g":"la piste","e":"the slope; piste","a":"la","c":"noun","t":"ski","x":"La piste est verglacée."},{"g":"la neige","e":"the snow","a":"la","c":"noun","t":"ski","x":"La neige est fraîche."},{"g":"la poudreuse","e":"the powder snow","a":"la","c":"noun","t":"ski","x":"La poudreuse est parfaite."},{"g":"la station","e":"the ski resort; station","a":"la","c":"noun","t":"ski","x":"La station est ouverte."},{"g":"le télésiège","e":"the chairlift","a":"le","c":"noun","t":"ski","x":"Le télésiège est rapide."},{"g":"le téléphérique","e":"the cable car","a":"le","c":"noun","t":"ski","x":"Le téléphérique monte au sommet."},{"g":"la remontée mécanique","e":"the ski lift","a":"la","c":"noun","t":"ski","x":"La remontée mécanique est fermée."},{"g":"les peaux de phoque","e":"the climbing skins","a":"la","c":"noun","t":"ski","x":"Je mets les peaux de phoque."},{"g":"le bâton","e":"the ski pole","a":"le","c":"noun","t":"ski","x":"Un bâton est cassé."},{"g":"le casque","e":"the helmet","a":"le","c":"noun","t":"ski","x":"Je porte un casque."},{"g":"les lunettes","e":"the goggles; glasses","a":"la","c":"noun","t":"ski","x":"Les lunettes sont rayées."},{"g":"la fixation","e":"the binding","a":"la","c":"noun","t":"ski","x":"La fixation est réglée."},{"g":"la chaussure de ski","e":"the ski boot","a":"la","c":"noun","t":"ski","x":"La chaussure de ski est serrée."},{"g":"l'avalanche","e":"the avalanche","a":"la","c":"noun","t":"ski","x":"L'avalanche est dangereuse."},{"g":"la sécurité","e":"the safety","a":"la","c":"noun","t":"ski","x":"La sécurité est importante."},{"g":"skier","e":"to ski","a":"","c":"verb","t":"ski","x":"Je skie tous les week-ends."},{"g":"glisser","e":"to slide; glide","a":"","c":"verb","t":"ski","x":"La neige fait glisser."},{"g":"le vélo","e":"the bike","a":"le","c":"noun","t":"velo","x":"Je pars à vélo."},{"g":"le VTT","e":"the mountain bike","a":"le","c":"noun","t":"velo","x":"Le VTT descend le sentier."},{"g":"le vélo de route","e":"the road bike","a":"le","c":"noun","t":"velo","x":"Le vélo de route est léger."},{"g":"le gravel","e":"the gravel bike","a":"le","c":"noun","t":"velo","x":"Le gravel roule partout."},{"g":"le cyclotourisme","e":"bike touring","a":"le","c":"noun","t":"velo","x":"Le cyclotourisme me plaît."},{"g":"le cycliste","e":"the cyclist","a":"le","c":"noun","t":"velo","x":"Le cycliste monte le col."},{"g":"la roue","e":"the wheel","a":"la","c":"noun","t":"velo","x":"La roue est voilée."},{"g":"le pneu","e":"the tyre","a":"le","c":"noun","t":"velo","x":"Le pneu est crevé."},{"g":"la chaîne","e":"the chain","a":"la","c":"noun","t":"velo","x":"La chaîne est sale."},{"g":"le guidon","e":"the handlebar","a":"le","c":"noun","t":"velo","x":"Le guidon est large."},{"g":"la selle","e":"the saddle","a":"la","c":"noun","t":"velo","x":"La selle est dure."},{"g":"le frein","e":"the brake","a":"le","c":"noun","t":"velo","x":"Le frein ne marche pas."},{"g":"la vitesse","e":"the gear; speed","a":"la","c":"noun","t":"velo","x":"Je change de vitesse."},{"g":"la pédale","e":"the pedal","a":"la","c":"noun","t":"velo","x":"La pédale est cassée."},{"g":"la piste cyclable","e":"the bike path","a":"la","c":"noun","t":"velo","x":"La piste cyclable est longue."},{"g":"la sacoche","e":"the pannier bag","a":"la","c":"noun","t":"velo","x":"La sacoche est pleine."},{"g":"pédaler","e":"to pedal","a":"","c":"verb","t":"velo","x":"Je pédale fort."},{"g":"rouler","e":"to ride; roll","a":"","c":"verb","t":"velo","x":"Je roule vite."},{"g":"la montagne","e":"the mountain","a":"la","c":"noun","t":"montagne","x":"La montagne est haute."},{"g":"le sommet","e":"the summit; peak","a":"le","c":"noun","t":"montagne","x":"Nous atteignons le sommet."},{"g":"la vallée","e":"the valley","a":"la","c":"noun","t":"montagne","x":"La vallée est verte."},{"g":"le col","e":"the mountain pass","a":"le","c":"noun","t":"montagne","x":"Le col est fermé en hiver."},{"g":"le glacier","e":"the glacier","a":"le","c":"noun","t":"montagne","x":"Le glacier fond."},{"g":"le rocher","e":"the rock","a":"le","c":"noun","t":"montagne","x":"Le rocher est glissant."},{"g":"la falaise","e":"the cliff","a":"la","c":"noun","t":"montagne","x":"La falaise est haute."},{"g":"le sentier","e":"the trail; path","a":"le","c":"noun","t":"montagne","x":"Le sentier monte."},{"g":"la forêt","e":"the forest","a":"la","c":"noun","t":"montagne","x":"La forêt est sombre."},{"g":"le lac","e":"the lake","a":"le","c":"noun","t":"montagne","x":"Le lac est gelé."},{"g":"la rivière","e":"the river","a":"la","c":"noun","t":"montagne","x":"La rivière coule."},{"g":"la cascade","e":"the waterfall","a":"la","c":"noun","t":"montagne","x":"La cascade est belle."},{"g":"le paysage","e":"the landscape","a":"le","c":"noun","t":"montagne","x":"Le paysage est magnifique."},{"g":"la vue","e":"the view","a":"la","c":"noun","t":"montagne","x":"La vue est superbe."},{"g":"l'altitude","e":"the altitude","a":"la","c":"noun","t":"montagne","x":"L'altitude est de 3000 mètres."},{"g":"la randonnée","e":"the hike","a":"la","c":"noun","t":"montagne","x":"La randonnée dure trois heures."},{"g":"le guide","e":"the guide; guidebook","a":"le","c":"noun","t":"montagne","x":"Le guide connaît la route."},{"g":"la carte","e":"the map","a":"la","c":"noun","t":"montagne","x":"Je regarde la carte."},{"g":"la boussole","e":"the compass","a":"la","c":"noun","t":"montagne","x":"La boussole indique le nord."},{"g":"grimper","e":"to climb","a":"","c":"verb","t":"montagne","x":"Nous grimpons le rocher."},{"g":"randonner","e":"to hike","a":"","c":"verb","t":"montagne","x":"J'aime randonner en été."},{"g":"le camping","e":"the campsite; camping","a":"le","c":"noun","t":"camping","x":"Le camping est complet."},{"g":"la tente","e":"the tent","a":"la","c":"noun","t":"camping","x":"La tente est petite."},{"g":"le sac de couchage","e":"the sleeping bag","a":"le","c":"noun","t":"camping","x":"Le sac de couchage est chaud."},{"g":"le matelas","e":"the mattress","a":"le","c":"noun","t":"camping","x":"Le matelas est gonflé."},{"g":"le réchaud","e":"the camping stove","a":"le","c":"noun","t":"camping","x":"Le réchaud chauffe l'eau."},{"g":"la lampe de poche","e":"the torch; flashlight","a":"la","c":"noun","t":"camping","x":"La lampe de poche est faible."},{"g":"le feu","e":"the fire","a":"le","c":"noun","t":"camping","x":"Le feu est interdit."},{"g":"le refuge","e":"the mountain hut; refuge","a":"le","c":"noun","t":"camping","x":"Le refuge est complet."},{"g":"la cabane","e":"the cabin; hut","a":"la","c":"noun","t":"camping","x":"La cabane est vieille."},{"g":"le dortoir","e":"the dormitory","a":"le","c":"noun","t":"camping","x":"Le dortoir est plein."},{"g":"la couverture","e":"the blanket","a":"la","c":"noun","t":"camping","x":"La couverture est chaude."},{"g":"la gourde","e":"the water bottle","a":"la","c":"noun","t":"camping","x":"La gourde est vide."},{"g":"le couteau","e":"the knife","a":"le","c":"noun","t":"camping","x":"Le couteau est tranchant."},{"g":"le sac à dos","e":"the backpack","a":"le","c":"noun","t":"camping","x":"Le sac à dos est lourd."},{"g":"le gardien","e":"the warden; keeper","a":"le","c":"noun","t":"camping","x":"Le gardien du refuge est gentil."},{"g":"la réservation","e":"the reservation","a":"la","c":"noun","t":"camping","x":"La réservation est confirmée."},{"g":"camper","e":"to camp","a":"","c":"verb","t":"camping","x":"Nous campons près du lac."},{"g":"le voyage","e":"the trip; journey","a":"le","c":"noun","t":"voyage","x":"Le voyage est long."},{"g":"le train","e":"the train","a":"le","c":"noun","t":"voyage","x":"Le train part à midi."},{"g":"l'avion","e":"the plane","a":"le","c":"noun","t":"voyage","x":"L'avion décolle."},{"g":"le bus","e":"the bus","a":"le","c":"noun","t":"voyage","x":"Le bus est en retard."},{"g":"le billet","e":"the ticket","a":"le","c":"noun","t":"voyage","x":"Le billet est cher."},{"g":"la valise","e":"the suitcase","a":"la","c":"noun","t":"voyage","x":"La valise est lourde."},{"g":"le passeport","e":"the passport","a":"le","c":"noun","t":"voyage","x":"Mon passeport est valide."},{"g":"la frontière","e":"the border","a":"la","c":"noun","t":"voyage","x":"La frontière est proche."},{"g":"la gare","e":"the train station","a":"la","c":"noun","t":"voyage","x":"La gare est grande."},{"g":"l'aéroport","e":"the airport","a":"le","c":"noun","t":"voyage","x":"L'aéroport est loin."},{"g":"l'hôtel","e":"the hotel","a":"le","c":"noun","t":"voyage","x":"L'hôtel est complet."},{"g":"l'auberge de jeunesse","e":"the youth hostel","a":"la","c":"noun","t":"voyage","x":"L'auberge de jeunesse est pas chère."},{"g":"le départ","e":"the departure","a":"le","c":"noun","t":"voyage","x":"Le départ est à huit heures."},{"g":"l'arrivée","e":"the arrival","a":"la","c":"noun","t":"voyage","x":"L'arrivée est prévue à midi."},{"g":"le vol","e":"the flight","a":"le","c":"noun","t":"voyage","x":"Le vol est annulé."},{"g":"la langue","e":"the language","a":"la","c":"noun","t":"voyage","x":"Je parle trois langues."},{"g":"réserver","e":"to book; reserve","a":"","c":"verb","t":"voyage","x":"Je réserve une chambre."},{"g":"la météo","e":"the weather; forecast","a":"la","c":"noun","t":"meteo","x":"La météo annonce du soleil."},{"g":"le soleil","e":"the sun","a":"le","c":"noun","t":"meteo","x":"Le soleil brille."},{"g":"la pluie","e":"the rain","a":"la","c":"noun","t":"meteo","x":"La pluie tombe."},{"g":"le nuage","e":"the cloud","a":"le","c":"noun","t":"meteo","x":"Le nuage est gris."},{"g":"le vent","e":"the wind","a":"le","c":"noun","t":"meteo","x":"Le vent est fort."},{"g":"le brouillard","e":"the fog","a":"le","c":"noun","t":"meteo","x":"Le brouillard est épais."},{"g":"la tempête","e":"the storm","a":"la","c":"noun","t":"meteo","x":"La tempête arrive."},{"g":"l'orage","e":"the thunderstorm","a":"le","c":"noun","t":"meteo","x":"L'orage éclate."},{"g":"l'éclair","e":"the lightning","a":"le","c":"noun","t":"meteo","x":"L'éclair illumine le ciel."},{"g":"le tonnerre","e":"the thunder","a":"le","c":"noun","t":"meteo","x":"Le tonnerre gronde."},{"g":"la température","e":"the temperature","a":"la","c":"noun","t":"meteo","x":"La température baisse."},{"g":"le degré","e":"the degree","a":"le","c":"noun","t":"meteo","x":"Il fait trois degrés."},{"g":"le ciel","e":"the sky","a":"le","c":"noun","t":"meteo","x":"Le ciel est bleu."},{"g":"le flocon","e":"the snowflake","a":"le","c":"noun","t":"meteo","x":"Un flocon tombe."},{"g":"la glace","e":"the ice","a":"la","c":"noun","t":"meteo","x":"La glace est épaisse."},{"g":"le verglas","e":"the black ice","a":"le","c":"noun","t":"meteo","x":"Le verglas est dangereux."},{"g":"le givre","e":"the frost; rime","a":"le","c":"noun","t":"meteo","x":"Le givre couvre la fenêtre."},{"g":"le gel","e":"the frost; freeze","a":"le","c":"noun","t":"meteo","x":"Le gel abîme les plantes."},{"g":"la grêle","e":"the hail","a":"la","c":"noun","t":"meteo","x":"La grêle tombe."},{"g":"le grésil","e":"the sleet; graupel","a":"le","c":"noun","t":"meteo","x":"Le grésil pique le visage."},{"g":"la corniche","e":"the cornice (snow)","a":"la","c":"noun","t":"meteo","x":"La corniche peut casser."},{"g":"la congère","e":"the snowdrift","a":"la","c":"noun","t":"meteo","x":"La congère bloque la route."},{"g":"le névé","e":"the firn; old snow","a":"le","c":"noun","t":"meteo","x":"Le névé est très dur."},{"g":"la neige fraîche","e":"the fresh snow","a":"la","c":"noun","t":"meteo","x":"La neige fraîche est légère."},{"g":"la neige damée","e":"the groomed snow","a":"la","c":"noun","t":"meteo","x":"La neige damée est rapide."},{"g":"la neige dure","e":"the hard snow","a":"la","c":"noun","t":"meteo","x":"La neige dure casse les carres."},{"g":"la neige mouillée","e":"the wet snow","a":"la","c":"noun","t":"meteo","x":"La neige mouillée est lourde."},{"g":"la neige croûtée","e":"the crusty snow","a":"la","c":"noun","t":"meteo","x":"La neige croûtée est difficile."},{"g":"la neige de printemps","e":"the spring snow","a":"la","c":"noun","t":"meteo","x":"La neige de printemps est molle l'après-midi."},{"g":"la plaque de glace","e":"the ice patch","a":"la","c":"noun","t":"meteo","x":"Attention à la plaque de glace !"},{"g":"la fonte","e":"the melt; thaw","a":"la","c":"noun","t":"meteo","x":"La fonte des neiges commence."},{"g":"ensoleillé","e":"sunny","a":"","c":"word","t":"meteo","x":"Le temps est ensoleillé."},{"g":"nuageux","e":"cloudy","a":"","c":"word","t":"meteo","x":"Le ciel est nuageux."},{"g":"pluvieux","e":"rainy","a":"","c":"word","t":"meteo","x":"Le temps est pluvieux."},{"g":"venteux","e":"windy","a":"","c":"word","t":"meteo","x":"Il fait venteux."},{"g":"enneigé","e":"snow-covered","a":"","c":"word","t":"meteo","x":"Le sommet est enneigé."},{"g":"gelé","e":"frozen","a":"","c":"word","t":"meteo","x":"Le lac est gelé."},{"g":"humide","e":"humid; damp","a":"","c":"word","t":"meteo","x":"L'air est humide."},{"g":"sec","e":"dry","a":"","c":"word","t":"meteo","x":"Le temps est sec."},{"g":"frais","e":"cool; fresh","a":"","c":"word","t":"meteo","x":"Il fait frais ce matin."},{"g":"doux","e":"mild","a":"","c":"word","t":"meteo","x":"L'hiver est doux."},{"g":"neiger","e":"to snow","a":"","c":"verb","t":"meteo","x":"Il neige en montagne."},{"g":"pleuvoir","e":"to rain","a":"","c":"verb","t":"meteo","x":"Il va pleuvoir."},{"g":"geler","e":"to freeze","a":"","c":"verb","t":"meteo","x":"Il gèle cette nuit."},{"g":"fondre","e":"to melt","a":"","c":"verb","t":"meteo","x":"La neige fond vite."},{"g":"souffler","e":"to blow","a":"","c":"verb","t":"meteo","x":"Le vent souffle fort."},{"g":"la France","e":"France","a":"la","c":"noun","t":"voyage","x":"La France est grande."},{"g":"l'Angleterre","e":"England","a":"la","c":"noun","t":"voyage","x":"L'Angleterre est une île."},{"g":"le pays de Galles","e":"Wales","a":"le","c":"noun","t":"voyage","x":"Le pays de Galles est vert."},{"g":"l'Écosse","e":"Scotland","a":"la","c":"noun","t":"voyage","x":"L'Écosse est au nord."},{"g":"l'Autriche","e":"Austria","a":"la","c":"noun","t":"voyage","x":"L'Autriche a des montagnes."},{"g":"l'Italie","e":"Italy","a":"la","c":"noun","t":"voyage","x":"L'Italie est au sud."},{"g":"le Japon","e":"Japan","a":"le","c":"noun","t":"voyage","x":"Le Japon est loin."},{"g":"la Russie","e":"Russia","a":"la","c":"noun","t":"voyage","x":"La Russie est immense."},{"g":"la Norvège","e":"Norway","a":"la","c":"noun","t":"voyage","x":"La Norvège a des fjords."},{"g":"la Nouvelle-Zélande","e":"New Zealand","a":"la","c":"noun","t":"voyage","x":"La Nouvelle-Zélande est loin."},{"g":"la Suisse","e":"Switzerland","a":"la","c":"noun","t":"voyage","x":"La Suisse a de belles montagnes."}];
+const PHRASES = [
+ ["Bonjour, comment ça va ?","Hello, how are you?"],
+ ["Ça va bien, merci.","I'm well, thanks."],
+ ["Comment tu t'appelles ?","What's your name?"],
+ ["Je m'appelle Marc.","My name is Marc."],
+ ["D'où viens-tu ?","Where are you from?"],
+ ["Je viens de Suisse.","I come from Switzerland."],
+ ["J'habite à Genève.","I live in Geneva."],
+ ["Je parle un peu français.","I speak a little French."],
+ ["Je ne comprends pas.","I don't understand."],
+ ["Pouvez-vous répéter ?","Can you repeat?"],
+ ["Combien ça coûte ?","How much does it cost?"],
+ ["Où est la gare ?","Where is the train station?"],
+ ["Je voudrais un café.","I'd like a coffee."],
+ ["Il fait beau aujourd'hui.","It's nice weather today."],
+ ["J'ai faim.","I'm hungry."],
+ ["Excusez-moi, j'ai une question.","Excuse me, I have a question."],
+ ["Merci beaucoup ! — De rien !","Thank you! — You're welcome!"],
+ ["Je rentre à la maison.","I'm going home."],
+ ["Qu'est-ce que tu fais aujourd'hui ?","What are you doing today?"],
+ ["À demain !","See you tomorrow!"],
+].map(([g,e])=>({g,e,a:"",c:"phrase",t:"",x:""}));
+
+const $=s=>document.querySelector(s);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;};
+function accepted(c){ return c.a==="le"?["le"]:c.a==="la"?["la"]:[]; }
+function isNoun(c){ return c.c==="noun" && (c.a==="le"||c.a==="la"); }
+function bare(c){ const g=c.g;
+  if(g.startsWith("le ")) return g.slice(3);
+  if(g.startsWith("la ")) return g.slice(3);
+  if(g.startsWith("les ")) return g.slice(4);
+  if(g.startsWith("l'")) return g.slice(2);
+  return g; }
+function frTerm(c){        // colour the leading article (le/la/l'/les)
+  const g=c.g; let art=null, rest=g;
+  if(g.startsWith("le ")){art="le";rest=g.slice(3);}
+  else if(g.startsWith("la ")){art="la";rest=g.slice(3);}
+  else if(g.startsWith("les ")){art="les";rest=g.slice(4);}
+  else if(g.startsWith("l'")){art="l'";rest=g.slice(2);}
+  if(!art) return g;
+  const col = c.a==="la" ? "la" : "le";
+  return `<span class="art ${col}">${art}</span>${art==="l'"?"":" "}${rest}`;
+}
+
+/* ---------- speech (French voice, on device) ---------- */
+const canSpeak = typeof speechSynthesis!=="undefined" && typeof SpeechSynthesisUtterance!=="undefined";
+let AUDIO=true, VOICE_URI=null;
+try{ AUDIO = (localStorage.getItem("fr_audio")||"on")!=="off"; }catch(e){}
+try{ VOICE_URI = localStorage.getItem("fr_voice")||null; }catch(e){}
+function frVoices(){ return canSpeak ? speechSynthesis.getVoices().filter(v=>/^fr/i.test(v.lang)) : []; }
+function rankVoice(v){ const n=(v.name+" "+v.voiceURI).toLowerCase(); let s=0;
+  if(/google/.test(n)) s+=100;                                   // Google voices sound best
+  if(/(enhanced|premium|neural|siri|natural)/.test(n)) s+=50;     // Apple enhanced / neural
+  if(v.localService===false) s+=20;                              // network voices usually better
+  if(/(compact|eloquence|basic)/.test(n)) s-=60;                 // the robotic ones
+  if(/fr-fr/i.test(v.lang)) s+=5;
+  return s; }
+function chosenVoice(){ const vs=frVoices(); if(!vs.length) return null;
+  if(VOICE_URI){ const m=vs.find(v=>v.voiceURI===VOICE_URI); if(m) return m; }
+  return vs.slice().sort((a,b)=>rankVoice(b)-rankVoice(a))[0]; }
+function speechText(c){ return (c.g||"").replace(/[()]/g,"").replace(/\s+/g," ").trim(); }
+function speak(text){ if(!canSpeak||!text) return;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text);
+    const v=chosenVoice(); u.lang = v ? v.lang : "fr-FR"; if(v) u.voice=v; u.rate=0.95; u.pitch=1;
+    const btn=document.querySelector(".spk");
+    if(btn){ u.onstart=()=>btn.classList.add("speaking"); u.onend=u.onerror=()=>btn.classList.remove("speaking"); }
+    speechSynthesis.speak(u);
+  }catch(e){} }
+function autoSpeak(text){ if(AUDIO) speak(text); }
+const SPK='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>';
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function spkBtn(say){ return canSpeak?`<button class="spk" data-say="${esc(say)}" aria-label="Hear it in French">${SPK}</button>`:""; }
+
+/* ---------- French numbers (counting) ---------- */
+const U=["zéro","un","deux","trois","quatre","cinq","six","sept","huit","neuf","dix","onze","douze","treize","quatorze","quinze","seize"];
+function u19(n){ return n<17 ? U[n] : "dix-"+U[n-10]; }
+const T={20:"vingt",30:"trente",40:"quarante",50:"cinquante",60:"soixante"};
+function fr99(n){
+  if(n<20) return u19(n);
+  if(n<70){ const t=Math.floor(n/10)*10,u=n%10;
+    if(u===0) return T[t]; if(u===1) return T[t]+" et un"; return T[t]+"-"+U[u]; }
+  if(n<80){ const r=n-60; return r===11 ? "soixante et onze" : "soixante-"+u19(r); }
+  const r=n-80; return r===0 ? "quatre-vingts" : "quatre-vingt-"+u19(r);
+}
+function frNum(n){
+  if(n===1000) return "mille";
+  if(n<100) return fr99(n);
+  const h=Math.floor(n/100), r=n%100;
+  if(r===0) return h===1 ? "cent" : U[h]+" cents";
+  return (h===1?"cent":U[h]+" cent")+" "+fr99(r);
+}
+function numberDeck(max,count){
+  const used=new Set(), out=[];
+  while(out.length<count){ const n=Math.floor(Math.random()*(max+1));
+    if(used.has(n)) continue; used.add(n);
+    out.push({g:frNum(n), e:String(n), a:"", c:"number", t:"", x:""}); }
+  return out;
+}
+
+/* days / months / seasons for a focused deck */
+const CAL=new Set(["le lundi","le mardi","le mercredi","le jeudi","le vendredi","le samedi","le dimanche","le week-end","janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre","le printemps","l'été","l'automne","l'hiver"]);
+
+/* ---------- persistence ---------- */
+let STATS={}, DIR="fr", NUM_RANGE=100, NUM_MODE="n2f";
+try{ STATS=JSON.parse(localStorage.getItem("fr_stats")||"{}"); }catch(e){ STATS={}; }
+try{ DIR=localStorage.getItem("fr_dir")||"fr"; }catch(e){}
+try{ NUM_RANGE=+(localStorage.getItem("fr_numrange")||100)||100; }catch(e){}
+try{ NUM_MODE=localStorage.getItem("fr_nummode")||"n2f"; }catch(e){}
+function save(){ try{ localStorage.setItem("fr_stats",JSON.stringify(STATS)); }catch(e){} }
+function saveDir(){ try{ localStorage.setItem("fr_dir",DIR); }catch(e){} }
+function record(c,ok){ const s=STATS[c.g]||(STATS[c.g]={s:0,k:0}); s.s++; if(ok)s.k++; save(); }
+function seenCount(){ return Object.keys(STATS).length; }
+function trickyCards(){
+  return WORDS.filter(c=>{const s=STATS[c.g]; return s&&s.s>=2&&s.k/s.s<0.6;})
+              .sort((a,b)=>{const A=STATS[a.g],B=STATS[b.g];return A.k/A.s-B.k/B.s;}).slice(0,24);
+}
+
+/* ---------- decks ---------- */
+const nouns=()=>WORDS.filter(c=>c.c==="noun");
+const DECKS=[
+ {id:"noun", nm:"Nouns", sub:"with le / la", get:()=>WORDS.filter(c=>c.c==="noun")},
+ {id:"verb", nm:"Verbs", sub:"", get:()=>WORDS.filter(c=>c.c==="verb")},
+ {id:"word", nm:"Other words", sub:"adjectives & more", get:()=>WORDS.filter(c=>c.c==="word")},
+ {id:"cal", nm:"Days & months", sub:"& seasons", get:()=>WORDS.filter(c=>CAL.has(c.g))},
+ {id:"numbers", nm:"Numbers", sub:"counting · pick a range", special:"numbers", wide:true, get:()=>[]},
+ {id:"phrase", nm:"Starter phrases", sub:"", get:()=>PHRASES},
+ {id:"all", nm:"Everything", sub:"", wide:true, get:()=>WORDS.concat(PHRASES)},
+ {id:"quick", nm:"Quick 20", sub:"random mix", get:()=>shuffle(WORDS.concat(PHRASES)).slice(0,20)},
+ {id:"tricky", nm:"Tricky words", sub:"your weak spots", get:trickyCards},
+ {id:"drill", nm:"Gender drill", sub:"le · la", drill:true, wide:true, get:nouns},
+ {id:"t_ski", nm:"Ski & randonnée", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="ski")},
+ {id:"t_velo", nm:"Vélo & VTT", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="velo")},
+ {id:"t_montagne", nm:"Montagne", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="montagne")},
+ {id:"t_meteo", nm:"Météo & neige", sub:"weather, snow & ice", group:"theme", get:()=>WORDS.filter(c=>c.t==="meteo")},
+ {id:"t_camping", nm:"Camping & refuges", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="camping")},
+ {id:"t_voyage", nm:"Voyage", sub:"", group:"theme", get:()=>WORDS.filter(c=>c.t==="voyage")},
+];
+
+function renderHome(){
+  $("#homeStat").innerHTML = seenCount() ? `<b>${seenCount()}</b> words practised` : `tap a deck to start`;
+  $("#dirSeg").querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.dir===DIR));
+  const grid=$("#deckGrid"); grid.innerHTML="";
+  const mk=d=>{
+    const n=d.get().length;
+    if(d.id==="tricky" && n<4) return;
+    const b=document.createElement("button");
+    b.className="deck"+(d.wide?" wide":"")+((d.drill||d.special==="numbers")?" drill":"");
+    b.innerHTML=`<span class="nm">${d.nm}</span>`+
+      `<span class="ct">${d.special ? d.sub : (d.sub?d.sub+" · ":"")+n+" card"+(n===1?"":"s")}</span>`;
+    b.onclick=()=>start(d);
+    grid.appendChild(b);
+  };
+  DECKS.filter(d=>d.group!=="theme").forEach(mk);
+  const gh=document.createElement("div"); gh.className="grouphead";
+  gh.textContent="For Ben"; grid.appendChild(gh);
+  DECKS.filter(d=>d.group==="theme").forEach(mk);
+}
+$("#dirSeg").onclick=e=>{const b=e.target.closest("button");if(!b)return;DIR=b.dataset.dir;saveDir();renderHome();};
+$("#resetBtn").onclick=()=>{ STATS={}; save(); renderHome(); };
+const audioBtn=$("#audioToggle");
+if(!canSpeak) audioBtn.classList.add("hidden");
+audioBtn.setAttribute("aria-pressed", AUDIO);
+audioBtn.onclick=()=>{ AUDIO=!AUDIO; try{localStorage.setItem("fr_audio",AUDIO?"on":"off");}catch(e){}
+  audioBtn.setAttribute("aria-pressed",AUDIO); if(AUDIO) speak("Bonjour"); };
+$("#stage").addEventListener("click",e=>{ const b=e.target.closest(".spk"); if(b){ e.stopPropagation(); speak(b.dataset.say); } });
+
+/* voice picker — lets Ben choose the best French voice his phone has */
+function populateVoices(){
+  if(!canSpeak) return;
+  const sel=$("#voiceSel"); const vs=frVoices().slice().sort((a,b)=>rankVoice(b)-rankVoice(a));
+  if(vs.length<=1){ sel.classList.add("hidden"); return; }
+  const cur=chosenVoice();
+  sel.innerHTML=vs.map(v=>`<option value="${esc(v.voiceURI)}"${(cur&&v.voiceURI===cur.voiceURI)?" selected":""}>${esc(v.name)}</option>`).join("");
+  sel.classList.remove("hidden");
+}
+$("#voiceSel").onchange=e=>{ VOICE_URI=e.target.value; try{localStorage.setItem("fr_voice",VOICE_URI);}catch(err){} speak("Bonjour, je parle français."); };
+if(canSpeak){ populateVoices(); try{ speechSynthesis.addEventListener("voiceschanged",populateVoices); }catch(e){} }
+
+/* ---------- session ---------- */
+let S=null;
+const QUIT="QUIT";
+function start(deck){
+  if(deck.special==="numbers") return openNumbers();
+  const cards=shuffle(deck.get()); const mode=deck.drill?"drill":DIR;
+  if(!cards.length) return;
+  S={deck, mode, q:cards, n0:cards.length, ptr:0, answered:0, correct:0, phase:null, artOk:true};
+  $("#home").classList.add("hidden"); $("#study").classList.remove("hidden");
+  $("#deckName").textContent=deck.drill?"Gender drill":deck.nm;
+  $("#deckSub").textContent = deck.drill ? "le · la" : (DIR==="fr"?"French → English":"English → French");
+  renderCard();
+}
+function backHome(){ S=null; $("#study").classList.add("hidden"); $("#home").classList.remove("hidden"); renderHome(); }
+$("#backBtn").onclick=backHome;
+
+function numHint(){ return NUM_MODE==="f2n" ? "Hear the French number, recall the digits." : "See the number, say it in French."; }
+function openNumbers(){
+  S={deck:{special:"numbers"}, mode:"cfg"};
+  $("#home").classList.add("hidden"); $("#study").classList.remove("hidden");
+  $("#deckName").textContent="Numbers"; $("#deckSub").textContent="choose your practice";
+  $("#scoreBox").textContent=""; $("#barFill").style.width="0%";
+  const rOpts=[[20,"0–20"],[100,"0–100"],[1000,"0–1000"]];
+  const mOpts=[["n2f","Number → French"],["f2n","French → number"]];
+  $("#stage").innerHTML=`<div class="card" style="justify-content:center;gap:20px">
+     <div class="cfg"><div class="section-label">Range</div>
+       <div class="seg" id="numRange">${rOpts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${NUM_RANGE==v}">${l}</button>`).join("")}</div></div>
+     <div class="cfg"><div class="section-label">Mode</div>
+       <div class="seg" id="numMode">${mOpts.map(([v,l])=>`<button data-v="${v}" aria-pressed="${NUM_MODE==v}">${l}</button>`).join("")}</div></div>
+     <div class="hint" id="numHint">${numHint()}</div></div>`;
+  $("#controls").innerHTML=`<button class="btn primary" id="numStart">Start</button>`;
+  const rng=$("#numRange"), md=$("#numMode");
+  rng.onclick=e=>{const b=e.target.closest("button");if(!b)return;NUM_RANGE=+b.dataset.v;try{localStorage.setItem("fr_numrange",NUM_RANGE);}catch(err){}
+    rng.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",+x.dataset.v===NUM_RANGE));};
+  md.onclick=e=>{const b=e.target.closest("button");if(!b)return;NUM_MODE=b.dataset.v;try{localStorage.setItem("fr_nummode",NUM_MODE);}catch(err){}
+    md.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x.dataset.v===NUM_MODE));
+    $("#numHint").textContent=numHint();};
+  $("#numStart").onclick=startNumbers;
+}
+function startNumbers(){
+  const cards=numberDeck(NUM_RANGE,20);
+  S={deck:{special:"numbers",nm:"Numbers"}, mode:(NUM_MODE==="f2n"?"numr":"num"), q:cards, n0:cards.length, ptr:0, answered:0, correct:0, phase:null, artOk:true};
+  $("#deckSub").textContent=`0–${NUM_RANGE} · ${NUM_MODE==="f2n"?"French → number":"number → French"}`;
+  renderCard();
+}
+
+function updateTop(){
+  const total=S.q.length, done=S.ptr, left=total-done;
+  $("#barFill").style.width=(100*done/total)+"%";
+  if(S.mode==="drill") $("#scoreBox").innerHTML = S.answered ? `<b>${S.correct}</b>/${S.answered} · ${left} left` : `${total} cards`;
+  else $("#scoreBox").textContent = S.answered ? `${left} left` : `${total} cards`;
+}
+
+function artButtons(){
+  return `<div class="arts">
+   <button class="art-btn" data-k="le">le<small>masc.</small></button>
+   <button class="art-btn" data-k="la">la<small>fem.</small></button></div>`;
+}
+function wireArticles(){ $("#controls").querySelectorAll(".art-btn").forEach(b=>b.onclick=()=>chooseArticle(b.dataset.k)); }
+
+function renderCard(){
+  if(S.ptr>=S.q.length) return finish();
+  updateTop();
+  const c=S.q[S.ptr]; S.card=c; S.artOk=true;
+  const stage=$("#stage"), ctl=$("#controls");
+  const nounMode = (S.mode==="drill") || (S.mode==="en" && isNoun(c));
+
+  if(S.mode==="drill"){
+    S.phase="article";
+    stage.innerHTML=`<div class="card"><div class="kicker">le or la?</div>
+       <div class="term">${bare(c)}</div>${spkBtn(bare(c))}
+       <div class="example" style="border:0;padding:0;font-style:normal;color:var(--muted)">${c.e}</div></div>`;
+    ctl.innerHTML=artButtons(); wireArticles(); autoSpeak(bare(c));
+  } else if(S.mode==="num"){
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">say this number in French</div>
+       <div class="term tnum" style="font-family:var(--font-ui);font-weight:800;font-size:clamp(3rem,17vw,5rem)">${c.e}</div></div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealNum(c);
+  } else if(S.mode==="numr"){
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">which number?</div>
+       <div class="term numword" style="font-family:var(--font-display)">${c.g}</div>${spkBtn(c.g)}</div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show number</button>`; $("#flip").onclick=()=>revealNumR(c); autoSpeak(c.g);
+  } else if(S.mode==="en"){
+    S.phase = nounMode ? "article" : "reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">say it in French</div>
+       <div class="term" style="font-family:var(--font-ui);font-weight:700">${c.e}</div></div>`;
+    if(nounMode){ ctl.innerHTML=artButtons(); wireArticles(); }
+    else { ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealEN(c,false); }
+  } else {
+    S.phase="reveal";
+    stage.innerHTML=`<div class="card"><div class="kicker">what does it mean?</div>
+       <div class="term">${frTerm(c)}</div>${spkBtn(speechText(c))}</div>`;
+    ctl.innerHTML=`<button class="btn primary" id="flip">Show answer</button>`; $("#flip").onclick=()=>revealFR(c); autoSpeak(speechText(c));
+  }
+}
+function chooseArticle(k){
+  const c=S.card, ok=accepted(c).includes(k); S.artOk=ok;
+  $("#controls").querySelectorAll(".art-btn").forEach(b=>{ b.disabled=true;
+    if(accepted(c).includes(b.dataset.k)) b.classList.add("fill");
+    if(b.dataset.k===k && !ok){ b.classList.remove("fill"); b.classList.add("wrong"); } });
+  if(S.mode==="drill"){
+    record(c,ok); S.answered++; if(ok)S.correct++; if(!ok)S.q.push(c);
+    const card=$("#stage").querySelector(".card");
+    card.insertAdjacentHTML("beforeend", `<div class="verdict ${ok?'ok':'no'}">${(ok?'✓ ':'✗ ')+c.g}</div>`);
+    const sb=$("#stage").querySelector(".spk"); if(sb) sb.dataset.say=speechText(c);
+    $("#controls").innerHTML=`<button class="btn primary" id="nxt">Next</button>`; $("#nxt").onclick=next;
+    autoSpeak(speechText(c));
+  } else { revealEN(c,true); }
+}
+function revealEN(c,wasNoun){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card">
+     <div class="kicker">${wasNoun?(S.artOk?'<span style="color:var(--good)">gender ✓</span>':'<span style="color:var(--bad)">gender ✗</span>'):'in French'}</div>
+     <div class="term">${frTerm(c)}</div>${spkBtn(speechText(c))}
+     <div class="answer" style="color:var(--muted);font-weight:500">${c.e}</div>
+     ${c.x?`<div class="example">${c.x}</div>`:""}</div>`;
+  markButtons(); autoSpeak(speechText(c));
+}
+function revealFR(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker">meaning</div>
+     <div class="term" style="font-size:clamp(1.4rem,6vw,2.1rem)">${frTerm(c)}</div>${spkBtn(speechText(c))}
+     <div class="answer">${c.e}</div>${c.x?`<div class="example">${c.x}</div>`:""}</div>`;
+  markButtons();
+}
+function revealNum(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker tnum" style="font-size:1.4rem;font-weight:800;color:var(--accent)">${c.e}</div>
+     <div class="term numword" style="font-family:var(--font-display)">${c.g}</div>${spkBtn(c.g)}</div>`;
+  markButtons(); autoSpeak(c.g);
+}
+function revealNumR(c){
+  S.phase="mark";
+  $("#stage").innerHTML=`<div class="card"><div class="kicker">${c.g}</div>
+     <div class="term tnum" style="font-family:var(--font-ui);font-weight:800;font-size:clamp(3rem,17vw,5rem)">${c.e}</div>${spkBtn(c.g)}</div>`;
+  markButtons();
+}
+function markButtons(){
+  $("#controls").innerHTML=`<div class="row"><button class="btn ghost" id="again">Again</button><button class="btn primary" id="got">Got it</button></div>`;
+  $("#got").onclick=()=>mark(true); $("#again").onclick=()=>mark(false);
+}
+function mark(gotIt){
+  const c=S.card; const ok=gotIt&&S.artOk;
+  if(S.mode!=="num" && S.mode!=="numr") record(c,ok);
+  S.answered++; if(ok)S.correct++; if(!ok)S.q.push(c); next();
+}
+function next(){ S.ptr++; renderCard(); }
+
+function finish(){
+  updateTop();
+  if(S.mode==="drill"){
+    const pct=S.answered?Math.round(100*S.correct/S.answered):0;
+    const msg = pct>=90?"Excellent !" : pct>=70?"Bien joué !" : pct>=50?"Continue comme ça !" : "C'est en forgeant qu'on devient forgeron.";
+    $("#stage").innerHTML=`<div class="done"><div class="pct tnum">${pct}%</div><div class="big">${msg}</div><p>${S.correct} of ${S.answered} correct</p></div>`;
+  } else {
+    const msg = (S.correct===S.answered) ? "Excellent !" : "Bien joué !";
+    $("#stage").innerHTML=`<div class="done"><div class="big" style="font-size:3rem">${msg}</div><p>${S.n0} card${S.n0===1?"":"s"} reviewed</p></div>`;
+  }
+  $("#controls").innerHTML=`<div class="row"><button class="btn ghost" id="home2">Decks</button><button class="btn primary" id="redo">Study again</button></div>`;
+  $("#home2").onclick=backHome;
+  $("#redo").onclick=()=> S.deck.special==="numbers"?startNumbers():start(S.deck);
+}
+
+document.addEventListener("keydown",e=>{
+  if(!S) return; const k=e.key.toLowerCase();
+  if(k==="escape") return backHome();
+  if(S.phase==="article"){ const map={"1":"le","2":"la"}; if(map[k]) chooseArticle(map[k]); }
+  else if(S.phase==="reveal" && (k===" "||k==="enter")){ e.preventDefault(); $("#flip")?.click(); }
+  else if(S.phase==="mark"){ if(k==="y"||k==="enter"){e.preventDefault();mark(true);} if(k==="n")mark(false); }
+  else if(S.q && $("#nxt") && (k===" "||k==="enter")){ e.preventDefault(); $("#nxt").click(); }
+});
+
+renderHome();
+</script>
+</body>
+</html>
