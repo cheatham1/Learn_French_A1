@@ -134,7 +134,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding-blo
 .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--surface);transition:transform .15s;box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .toggle[aria-pressed="true"] .sw{background:var(--le)}
 .toggle[aria-pressed="true"] .sw::after{transform:translateX(14px)}
-.voicesel{align-self:flex-start;max-width:100%;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.82rem;font-weight:600;color:var(--fg);margin-top:-8px}
+.voicewrap{display:flex;flex-direction:column;gap:6px;align-self:flex-start;max-width:100%;margin-top:-8px}
+.voicelabel{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.voicesel{max-width:100%;background:var(--faint);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:.82rem;font-weight:600;color:var(--fg)}
 .spk{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:var(--surface-2);color:var(--fg);display:inline-grid;place-items:center;transition:transform .07s ease,background .12s}
 .spk:active{transform:scale(.9)} .spk.speaking{color:var(--le);border-color:var(--le)}
 .cfg{width:100%;display:flex;flex-direction:column;gap:9px}
@@ -171,7 +173,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding-blo
       </div>
     </div>
     <button class="toggle" id="audioToggle" aria-pressed="true"><span class="sw"></span> Speak French aloud</button>
-    <select id="voiceSel" class="voicesel hidden" aria-label="French voice"></select>
+    <div id="voiceWrap" class="voicewrap hidden">
+      <label for="voiceSel" class="voicelabel">Choose the French voice</label>
+      <select id="voiceSel" class="voicesel" aria-label="French voice"></select>
+    </div>
     <div>
       <div class="section-label" style="margin-bottom:8px">Decks</div>
       <div class="decks" id="deckGrid"></div>
@@ -362,11 +367,12 @@ $("#stage").addEventListener("click",e=>{ const b=e.target.closest(".spk"); if(b
 /* voice picker — lets Ben choose the best French voice his phone has */
 function populateVoices(){
   if(!canSpeak) return;
-  const sel=$("#voiceSel"); const vs=frVoices().slice().sort((a,b)=>rankVoice(b)-rankVoice(a));
-  if(vs.length<=1){ sel.classList.add("hidden"); return; }
+  const wrap=$("#voiceWrap"), sel=$("#voiceSel");
+  const vs=frVoices().slice().sort((a,b)=>rankVoice(b)-rankVoice(a));
+  if(vs.length<=1){ wrap.classList.add("hidden"); return; }
   const cur=chosenVoice();
   sel.innerHTML=vs.map(v=>`<option value="${esc(v.voiceURI)}"${(cur&&v.voiceURI===cur.voiceURI)?" selected":""}>${esc(v.name)}</option>`).join("");
-  sel.classList.remove("hidden");
+  wrap.classList.remove("hidden");
 }
 $("#voiceSel").onchange=e=>{ VOICE_URI=e.target.value; try{localStorage.setItem("fr_voice",VOICE_URI);}catch(err){} speak("Bonjour, je parle français."); };
 if(canSpeak){ populateVoices(); try{ speechSynthesis.addEventListener("voiceschanged",populateVoices); }catch(e){} }
